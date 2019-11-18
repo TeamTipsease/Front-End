@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 import Tabs from "@material-ui/core/Tabs";
@@ -22,25 +21,35 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   tabContainer: {
-    // width: "25%"
+    height: "100%"
   },
   tabLink: {
     width: "20%",
-    minWidth: "90px"
+    minWidth: "100px"
   },
   tabIndicator: {
-    indicator: {
-      backgroundColor: "#ffffff"
-    },
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffffdd"
   }
 }));
 
+const findActiveTabIndex = location => {
+  switch (location.pathname) {
+    case "/":
+      return 0;
+    case "/register":
+      return 1;
+    case "/login":
+      return 2;
+    default:
+      return 0;
+  }
+};
+
 const NavBar = () => {
-  const [currentTab, setCurrentTab] = useState(0);
   const history = useHistory();
+  const defaultIndex = findActiveTabIndex(history.location); // Finds the default tab index by using url endpoint
+  const [currentTab, setCurrentTab] = useState(defaultIndex);
   const classes = useStyles();
-  console.log(history);
 
   useEffect(() => {
     switch (currentTab) {
@@ -53,8 +62,11 @@ const NavBar = () => {
       case 2:
         history.push("/login");
         break;
+      default:
+        history.push("/");
+        break;
     }
-  }, [currentTab]);
+  }, [currentTab, history]);
 
   const handleTabChange = (currentValue, newValue) => {
     setCurrentTab(newValue);
@@ -78,10 +90,10 @@ const NavBar = () => {
           value={currentTab}
           onChange={handleTabChange}
           aria-label="navigation tab links"
-          indicatorColor={classes.tabIndicator}
           className={classes.tabContainer}
+          classes={{ indicator: classes.tabIndicator }}
         >
-          <Tab label="Home" indicatorColor="#fff" className={classes.tabLink} />
+          <Tab label="Home" className={classes.tabLink} />
 
           <Tab label="Register" className={classes.tabLink} />
           <Tab label="Login" className={classes.tabLink} />
