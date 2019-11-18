@@ -2,10 +2,12 @@ import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <Switch>
         <Route exact path="/">
           <h1>Test</h1>
