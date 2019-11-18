@@ -51,6 +51,8 @@ const NavBar = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    //Sets current tab index depending on location.
+    //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
     const activeTabIndex = findActiveTabIndex(history.location);
     setCurrentTab(activeTabIndex);
   }, [history]);
@@ -62,7 +64,6 @@ const NavBar = () => {
         break;
       case 1:
         history.push("/register");
-
         break;
       case 2:
         history.push("/login");
