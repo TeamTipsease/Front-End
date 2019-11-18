@@ -62,16 +62,13 @@ const NavBar = () => {
     switch (newValue) {
       case 0:
         history.push("/");
-        console.log("Pushing 0");
         break;
       case 1:
         history.push("/register");
-        console.log("Pushing 1");
 
         break;
       case 2:
         history.push("/login");
-        console.log("Pushing 2");
         break;
       default:
         history.push("/");
