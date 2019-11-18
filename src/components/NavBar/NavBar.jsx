@@ -55,7 +55,7 @@ const NavBar = () => {
     //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
     const activeTabIndex = findActiveTabIndex(history.location);
     setCurrentTab(activeTabIndex);
-  }, [history]);
+  }, [history.location]);
 
   const handleTabChange = (currentValue, newValue) => {
     switch (newValue) {
