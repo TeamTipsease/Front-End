@@ -33,6 +33,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const findActiveTabIndex = location => {
+  //Will give the default tab index depending on the route.
+  //This fixes the refresh bug, whenever the user refreshes, the tabs will default back to 0 (which will always route the user to "/".)
   switch (location.pathname) {
     case "/":
       return 0;
@@ -52,6 +54,7 @@ const NavBar = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    //Whenever the current tab switches, route user.
     switch (currentTab) {
       case 0:
         history.push("/");
@@ -102,6 +105,7 @@ const NavBar = () => {
         {/* <Button color="inherit">Login</Button>
         <Button color="inherit">Settings</Button> */}
         {/* TODO: Logout Button if user is signed in */}
+        {/* TODO: Service worker profile edit tab if signed in and service worker. */}
       </Toolbar>
     </AppBar>
   );
