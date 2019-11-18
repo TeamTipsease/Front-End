@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
+import LogIn from './components/LogIn';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route exact path="/">
           <h1>Test</h1>
         </Route>
-        <Route exact path="/login">
+        <Route exact path="/login" component={LogIn}>
           {/* Put login component here */}
         </Route>
 
