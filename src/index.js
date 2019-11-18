@@ -3,15 +3,21 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
-
+//Redux
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 //Theme color imports
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
 
-//Creating the Material Theme colors
+const rootReducer = combineReducers({});
 
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+//Creating the Material Theme colors
 //Making the blue a different shade (darker than default)
 const primaryColor = blue[700];
 
@@ -26,11 +32,13 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <Router>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 
