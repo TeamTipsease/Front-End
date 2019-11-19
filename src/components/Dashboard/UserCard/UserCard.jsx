@@ -5,12 +5,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 285,
+    width: "100%",
+    boxSizing: "border-box",
     margin: "auto",
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserCard = () => {
+const UserCard = ({ name, blurb, image }) => {
   const classes = useStyles();
 
   const handleClick = () => {
@@ -50,18 +50,13 @@ const UserCard = () => {
   };
   return (
     <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={
-          "https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-        }
-      />
+      <CardMedia className={classes.media} image={image} />
       <CardContent className={classes.content}>
         <Typography className={classes.heading} variant={"h6"}>
-          Mark Artishuk
+          {name}
         </Typography>
         <Typography className={classes.subheading} variant={"caption"}>
-          I'm a hard worker who works hard and hard and hard so tip me please.
+          {blurb}
         </Typography>
         <Divider className={classes.divider} light />
 
