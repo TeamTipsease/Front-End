@@ -11,9 +11,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
   menuButton: {
     marginRight: theme.spacing(2)
   },
@@ -54,8 +51,14 @@ const NavBar = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    //Whenever the current tab switches, route user.
-    switch (currentTab) {
+    //Sets current tab index depending on location.
+    //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
+    const activeTabIndex = findActiveTabIndex(history.location);
+    setCurrentTab(activeTabIndex);
+  }, [history.location]);
+
+  const handleTabChange = (currentValue, newValue) => {
+    switch (newValue) {
       case 0:
         history.push("/");
         break;
@@ -69,9 +72,6 @@ const NavBar = () => {
         history.push("/");
         break;
     }
-  }, [currentTab, history]);
-
-  const handleTabChange = (currentValue, newValue) => {
     setCurrentTab(newValue);
   };
 

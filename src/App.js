@@ -3,7 +3,8 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
-import LogIn from './components/LogIn';
+import LogIn from "./components/LogIn";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
           {/* Put register component here */}
         </Route>
 
-        <PrivateRoute path="/dashboard">
+        <Route path="/dashboard">
           {/* Dashboard component here. */}
-        </PrivateRoute>
+          <Dashboard />
+        </Route>
 
         <PrivateRoute path="/worker-profile/:id">
           {/*Service worker profile here (Passing in ID of worker through path)  */}
