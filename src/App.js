@@ -5,14 +5,32 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
 import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { Button } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { login } from "./store/actions/userActions";
+import Axios from "axios";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    console.log("register");
+    const credentials = {
+      username: "mark",
+      password: "test"
+    };
+    dispatch(login(credentials));
+  };
+
   return (
     <div className="App">
       <NavBar />
       <Switch>
         <Route exact path="/">
           <h1>Test</h1>
+          <Button onClick={handleLogin} variant="contained">
+            Login
+          </Button>
         </Route>
         <Route exact path="/login" component={LogIn}>
           {/* Put login component here */}

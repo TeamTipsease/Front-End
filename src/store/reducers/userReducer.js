@@ -17,6 +17,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_START:
       return { ...state, isLoggingIn: true };
     case LOGIN_SUCCESS:
+      localStorage.setItem("authToken", action.payload);
       return { ...state, isLoggingIn: false, loggedIn: true, user: {} }; //TODO: Set user data from payload.
     default:
       return state;
