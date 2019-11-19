@@ -15,7 +15,7 @@ import { userReducer } from "./store/reducers/userReducer";
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
-import red from "@material-ui/core/colors/red";
+import pink from "@material-ui/core/colors/pink";
 
 const rootReducer = combineReducers({ userReducer });
 
@@ -24,12 +24,15 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 //Creating the Material Theme colors
 //Making the blue a different shade (darker than default)
 const primaryColor = blue[700];
-
+const secondaryColor = pink[500];
 //Making the theme to implement into ThemeProvider
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: primaryColor
+    },
+    secondary: {
+      main: secondaryColor
     }
   }
 });

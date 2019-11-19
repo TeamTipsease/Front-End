@@ -5,7 +5,8 @@ import {
   FETCH_WORKERS_FAIL,
   FETCH_WORKERS_START,
   FETCH_WORKERS_SUCCESS,
-  LOGOUT
+  LOGOUT,
+  APP_UPDATE
 } from "../actions/userActions";
 
 const initialState = {
@@ -24,6 +25,8 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case APP_UPDATE:
+      return { ...state, loggedIn: action.payload.loggedIn };
     case LOGOUT:
       localStorage.removeItem("authToken");
       return { ...state, loggedIn: false };

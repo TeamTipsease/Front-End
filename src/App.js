@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -7,7 +7,12 @@ import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { login, getWorkers, getUser } from "./store/actions/userActions";
+import {
+  login,
+  getWorkers,
+  getUser,
+  updateApp
+} from "./store/actions/userActions";
 import Axios from "axios";
 import { axiosWithAuth } from "./utils/axiosAuth";
 
@@ -15,6 +20,11 @@ function App() {
   const dispatch = useDispatch();
   const workers = useSelector(state => state.userReducer.workers);
   console.log("Current workers: ", workers);
+
+  useEffect(() => {
+    dispatch(updateApp());
+  }, []);
+
   const handleLogin = () => {
     console.log("workers");
     const credentials = {
@@ -36,7 +46,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           <h1>Test</h1>
-          <Button onClick={handleLogin} variant="contained">
+          <Button color="secondary" onClick={handleLogin} variant="contained">
             Login
           </Button>
         </Route>
@@ -48,10 +58,10 @@ function App() {
           {/* Put register component here */}
         </Route>
 
-        <Route path="/dashboard">
+        <PrivateRoute path="/dashboard">
           {/* Dashboard component here. */}
           <Dashboard />
-        </Route>
+        </PrivateRoute>
 
         <PrivateRoute path="/worker-profile/:id">
           {/*Service worker profile here (Passing in ID of worker through path)  */}

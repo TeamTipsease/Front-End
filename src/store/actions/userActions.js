@@ -1,10 +1,13 @@
 import axios from "axios";
 import { axiosWithAuth } from "../../utils/axiosAuth";
+
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 
 export const LOGOUT = "LOGOUT";
+
+export const APP_UPDATE = "APP_UPDATE";
 
 export const FETCH_WORKERS_START = "FETCH_WORKERS_START";
 export const FETCH_WORKERS_SUCCESS = "FETCH_WORKERS_SUCCESS";
@@ -50,6 +53,12 @@ export const getUser = id => dispatch => {
     .catch(err => {
       console.log(err.response);
     });
+};
+
+export const updateApp = () => dispatch => {
+  const loggedIn = localStorage.getItem("authToken") ? true : false;
+  const updates = { loggedIn };
+  dispatch({ type: APP_UPDATE, payload: updates });
 };
 
 export const logout = () => dispatch => {

@@ -38,18 +38,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const findActiveTabIndex = location => {
+const findActiveTabIndex = (location, loggedIn) => {
   //Will give the default tab index depending on the route.
   //This fixes the refresh bug, whenever the user refreshes, the tabs will default back to 0 (which will always route the user to "/".)
-  switch (location.pathname) {
-    case "/":
-      return 0;
-    case "/register":
-      return 1;
-    case "/login":
-      return 2;
-    default:
-      return 0;
+  if (!loggedIn) {
+    switch (location.pathname) {
+      case "/":
+        return 0;
+      case "/register":
+        return 1;
+      case "/login":
+        return 2;
+      default:
+        return 0;
+    }
+  } else {
+    switch (location.pathname) {
+      case "/dashboard":
+        return 0;
+      case "/profile":
+        return 1;
+      default:
+        return 0;
+    }
   }
 };
 
@@ -57,31 +68,45 @@ const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loggedIn = useSelector(state => state.userReducer.loggedIn);
-  const defaultIndex = findActiveTabIndex(history.location); // Finds the default tab index by using url endpoint
+  const defaultIndex = findActiveTabIndex(history.location, loggedIn); // Finds the default tab index by using url endpoint
   const [currentTab, setCurrentTab] = useState(defaultIndex);
   const classes = useStyles();
 
   useEffect(() => {
     //Sets current tab index depending on location.
     //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
-    const activeTabIndex = findActiveTabIndex(history.location);
+    const activeTabIndex = findActiveTabIndex(history.location, loggedIn);
     setCurrentTab(activeTabIndex);
   }, [history.location]);
 
   const handleTabChange = (currentValue, newValue) => {
-    switch (newValue) {
-      case 0:
-        history.push("/");
-        break;
-      case 1:
-        history.push("/register");
-        break;
-      case 2:
-        history.push("/login");
-        break;
-      default:
-        history.push("/");
-        break;
+    if (!loggedIn) {
+      switch (newValue) {
+        case 0:
+          history.push("/");
+          break;
+        case 1:
+          history.push("/register");
+          break;
+        case 2:
+          history.push("/login");
+          break;
+        default:
+          history.push("/");
+          break;
+      }
+    } else {
+      switch (newValue) {
+        case 0:
+          history.push("/dashboard");
+          break;
+        case 1:
+          history.push("/profile");
+          break;
+        default:
+          history.push("/");
+          break;
+      }
     }
     setCurrentTab(newValue);
   };
@@ -89,6 +114,7 @@ const NavBar = () => {
   const handleLogout = () => {
     console.log("Logging out...");
     dispatch(logout());
+    history.push("/login");
   };
 
   return (
