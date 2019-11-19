@@ -2,8 +2,12 @@ import axios from "axios";
 
 //TODO: Implement base url of backend and add Authorization header.
 export const axiosWithAuth = () => {
+  const token = localStorage.getItem("authToken");
   return axios.create({
-    baseURL: "",
-    headers: {}
+    baseURL: "https://tipseasebackend.herokuapp.com",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`
+    }
   });
 };

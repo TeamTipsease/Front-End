@@ -7,19 +7,19 @@ import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { login } from "./store/actions/userActions";
+import { login, getWorkers } from "./store/actions/userActions";
 import Axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    console.log("register");
+    console.log("workers");
     const credentials = {
       username: "mark",
       password: "test"
     };
-    dispatch(login(credentials));
+    dispatch(getWorkers());
   };
 
   return (
