@@ -4,7 +4,8 @@ import {
   LOGIN_START,
   FETCH_WORKERS_FAIL,
   FETCH_WORKERS_START,
-  FETCH_WORKERS_SUCCESS
+  FETCH_WORKERS_SUCCESS,
+  LOGOUT
 } from "../actions/userActions";
 
 const initialState = {
@@ -18,11 +19,14 @@ const initialState = {
 
   fetchingWorkers: false,
   fetchWorkersError: "",
-  serviceWorkers: []
+  workers: []
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT:
+      localStorage.removeItem("authToken");
+      return { ...state, loggedIn: false };
     case LOGIN_FAIL:
       return { ...state, loginError: action.payload, isLoggingIn: false };
     case LOGIN_START:
@@ -36,7 +40,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingWorkers: false,
-        serviceWorkers: action.payload
+        workers: action.payload
       };
     case FETCH_WORKERS_FAIL:
       return {

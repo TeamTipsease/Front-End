@@ -3,12 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/actions/userActions";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -26,6 +28,13 @@ const useStyles = makeStyles(theme => ({
   },
   tabIndicator: {
     backgroundColor: "#ffffffdd"
+  },
+  logoutButton: {
+    color: "#fff"
+  },
+  avatarIcon: {
+    marginRight: 10,
+    marginLeft: 2
   }
 }));
 
@@ -46,6 +55,8 @@ const findActiveTabIndex = location => {
 
 const NavBar = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(state => state.userReducer.loggedIn);
   const defaultIndex = findActiveTabIndex(history.location); // Finds the default tab index by using url endpoint
   const [currentTab, setCurrentTab] = useState(defaultIndex);
   const classes = useStyles();
@@ -75,32 +86,59 @@ const NavBar = () => {
     setCurrentTab(newValue);
   };
 
+  const handleLogout = () => {
+    console.log("Logging out...");
+    dispatch(logout());
+  };
+
   return (
     <AppBar className={classes.appBar} position="static">
       <Toolbar>
-        <IconButton
+        {/* <IconButton
           edge="start"
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
         >
           <MenuIcon />
-        </IconButton>
+        </IconButton> */}
         <Typography variant="h5" className={classes.title}>
           Tipsease
         </Typography>
-        <Tabs
-          value={currentTab}
-          onChange={handleTabChange}
-          aria-label="navigation tab links"
-          className={classes.tabContainer}
-          classes={{ indicator: classes.tabIndicator }}
-        >
-          <Tab label="Home" className={classes.tabLink} />
 
-          <Tab label="Register" className={classes.tabLink} />
-          <Tab label="Login" className={classes.tabLink} />
-        </Tabs>
+        {/* If user is NOT logged in */}
+        {loggedIn ? (
+          <React.Fragment>
+            <Tabs
+              value={currentTab}
+              onChange={handleTabChange}
+              aria-label="navigation tab links"
+              className={classes.tabContainer}
+              classes={{ indicator: classes.tabIndicator }}
+            >
+              <Tab label="Dashboard" className={classes.tabLink} />
+
+              <Tab label="Profile" className={classes.tabLink} />
+            </Tabs>
+            <AccountCircleIcon className={classes.avatarIcon} />
+            <Button onClick={handleLogout} className={classes.logoutButton}>
+              Logout
+            </Button>
+          </React.Fragment>
+        ) : (
+          <Tabs
+            value={currentTab}
+            onChange={handleTabChange}
+            aria-label="navigation tab links"
+            className={classes.tabContainer}
+            classes={{ indicator: classes.tabIndicator }}
+          >
+            <Tab label="Home" className={classes.tabLink} />
+
+            <Tab label="Register" className={classes.tabLink} />
+            <Tab label="Login" className={classes.tabLink} />
+          </Tabs>
+        )}
 
         {/* <Button color="inherit">Login</Button>
         <Button color="inherit">Settings</Button> */}

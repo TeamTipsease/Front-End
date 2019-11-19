@@ -4,9 +4,15 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 
+export const LOGOUT = "LOGOUT";
+
 export const FETCH_WORKERS_START = "FETCH_WORKERS_START";
 export const FETCH_WORKERS_SUCCESS = "FETCH_WORKERS_SUCCESS";
 export const FETCH_WORKERS_FAIL = "FETCH_WORKERS_FAIL";
+
+export const FETCH_USER_START = "FETCH_USER_START";
+export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
+export const FETCH_USER_FAIL = "FETCH_USER_FAIL";
 
 //login action will handle all login types.
 export const login = credentials => dispatch => {
@@ -24,17 +30,28 @@ export const login = credentials => dispatch => {
 
 export const getWorkers = () => dispatch => {
   dispatch({ type: FETCH_WORKERS_START });
-  console.log("Fetching workers...");
   axiosWithAuth()
     .get("/api/worker")
     .then(res => {
       dispatch({ type: FETCH_WORKERS_SUCCESS, payload: res.data });
-      console.log(res);
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: FETCH_WORKERS_FAIL, payload: err.message });
     });
 };
 
-export const logout = () => dispatch => {};
+export const getUser = id => dispatch => {
+  dispatch({ type: FETCH_USER_START });
+  axiosWithAuth()
+    .get(`/${id}`)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err.response);
+    });
+};
+
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};

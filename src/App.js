@@ -6,20 +6,28 @@ import NavBar from "./components/NavBar/NavBar";
 import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { Button } from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { login, getWorkers } from "./store/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { login, getWorkers, getUser } from "./store/actions/userActions";
 import Axios from "axios";
+import { axiosWithAuth } from "./utils/axiosAuth";
 
 function App() {
   const dispatch = useDispatch();
-
+  const workers = useSelector(state => state.userReducer.workers);
+  console.log("Current workers: ", workers);
   const handleLogin = () => {
     console.log("workers");
     const credentials = {
       username: "mark",
       password: "test"
     };
-    dispatch(getWorkers());
+    dispatch(login(credentials));
+
+    // axiosWithAuth()
+    //   .get("/api/worker/7")
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
+    // dispatch(login(credentials));
   };
 
   return (
