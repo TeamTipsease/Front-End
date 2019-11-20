@@ -56,8 +56,10 @@ const findActiveTabIndex = (location, loggedIn) => {
     switch (location.pathname) {
       case "/dashboard":
         return 0;
-      case "/profile":
+      case "/settings":
         return 1;
+      case "/profile":
+        return 2;
       default:
         return 0;
     }
@@ -101,6 +103,9 @@ const NavBar = () => {
           history.push("/dashboard");
           break;
         case 1:
+          history.push("/settings");
+          break;
+        case 2:
           history.push("/profile");
           break;
         default:
@@ -143,7 +148,7 @@ const NavBar = () => {
               classes={{ indicator: classes.tabIndicator }}
             >
               <Tab label="Dashboard" className={classes.tabLink} />
-
+              <Tab label="Settings" className={classes.tabLink} />
               <Tab label="Profile" className={classes.tabLink} />
             </Tabs>
             <AccountCircleIcon className={classes.avatarIcon} />

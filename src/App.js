@@ -19,6 +19,7 @@ import Axios from "axios";
 import { axiosWithAuth } from "./utils/axiosAuth";
 import WorkerView from "./components/WorkerView/WorkerView";
 import Profile from "./components/Profile/Profile";
+import SettingsView from "./components/SettingsView/SettingsView";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,9 @@ function App() {
         <PrivateRoute path="/worker/:id">
           {/*Service worker profile here (Passing in ID of worker through path)  */}
           <WorkerView />
+        </PrivateRoute>
+        <PrivateRoute path="/settings">
+          <SettingsView />
         </PrivateRoute>
       </Switch>
     </div>

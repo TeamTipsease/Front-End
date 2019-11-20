@@ -110,11 +110,11 @@ export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
 };
 
-export const updateUser = id => dispatch => {
+export const updateUser = (id, updatedUser) => dispatch => {
   dispatch({ type: UPDATE_USER_START });
 
   axiosWithAuth()
-    .put("/")
+    .put("/api/worker/7", { id, ...updatedUser })
     .then(res => {
       console.log(res);
       dispatch({ type: UPDATE_USER_SUCCESS });

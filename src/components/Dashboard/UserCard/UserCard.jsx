@@ -19,16 +19,13 @@ const useStyles = makeStyles(theme => ({
       boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
     }
   },
-  media: {
-    paddingTop: "55%" //Height of image
-  },
   content: {
     textAlign: "left",
     padding: 20
   },
   divider: {
     marginTop: `15px`,
-    marginBottom: `10px`
+    marginBottom: `20px`
   },
   heading: {
     fontWeight: "bold",
@@ -54,7 +51,6 @@ const UserCard = ({ name, blurb, image, id = 1 }) => {
   const history = useHistory();
   const classes = useStyles();
   const handleClick = () => {
-    console.log("Button clicked.");
     history.push(`/worker/${id}`);
   };
   return (
@@ -70,7 +66,13 @@ const UserCard = ({ name, blurb, image, id = 1 }) => {
         </Typography>
         <Divider className={classes.divider} light />
 
-        <Button onClick={handleClick} className={classes.button} fullWidth>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleClick}
+          className={classes.button}
+          fullWidth
+        >
           View Profile
         </Button>
       </CardContent>

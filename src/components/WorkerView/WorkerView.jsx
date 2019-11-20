@@ -46,9 +46,10 @@ const useStyles = makeStyles({
 });
 
 const WorkerView = () => {
+  const params = useParams();
   const classes = useStyles();
   const user = useSelector(state => state.userReducer.user);
-  console.log(user);
+  const { id } = params; //The id of the worker that we want to view
 
   const handleTipClick = () => {
     console.log("Tipped?");
