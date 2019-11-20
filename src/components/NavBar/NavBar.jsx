@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
   tabLink: {
     width: "20%",
-    minWidth: "100px"
+    minWidth: "85px"
   },
   tabIndicator: {
     backgroundColor: "#ffffffdd"
@@ -77,7 +77,7 @@ const NavBar = () => {
     //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
     const activeTabIndex = findActiveTabIndex(history.location, loggedIn);
     setCurrentTab(activeTabIndex);
-  }, [history.location]);
+  }, [history.location, loggedIn]);
 
   const handleTabChange = (currentValue, newValue) => {
     if (!loggedIn) {
