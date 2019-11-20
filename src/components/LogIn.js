@@ -52,6 +52,27 @@ const useStyles = makeStyles(theme => ({
 
 export default function LogIn() {
   const classes = useStyles();
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChangeNameHandler = (event) =>{
+    event.preventDefault();
+    console.log('user name is: ', userName)
+    return setUserName(event.target.value)
+  }
+const onChangePasswordHandler = (event) => {
+  event.preventDefault();
+  console.log('user password is: ', password)
+
+  return setPassword(event.target.value)
+}
+
+const onSubmitHandler = (event) =>{
+  event.preventDefault();
+  console.log('clicking works')
+
+  // redux logic for form submission goes here!
+}
 
   return (
     <Container component="main" maxWidth="xs">
@@ -69,10 +90,12 @@ export default function LogIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="userName"
+            label="User Name"
+            name="User Name"
+            value={userName}
+            onChange={onChangeNameHandler}
+            // autoComplete="email"
             autoFocus
           />
           <TextField
@@ -84,6 +107,8 @@ export default function LogIn() {
             label="Password"
             type="password"
             id="password"
+            value={password}
+            onChange={onChangePasswordHandler}
             autoComplete="current-password"
           />
 
@@ -93,6 +118,7 @@ export default function LogIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmitHandler}
           >
             Log In
           </Button>
