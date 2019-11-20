@@ -3,6 +3,14 @@ import UserCard from "../UserCard/UserCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import pic1 from "../../../userImages/angel.png";
+import pic2 from "../../../userImages/bagHead.png";
+import pic3 from "../../../userImages/bionicEye.png";
+import pic4 from "../../../userImages/catEars.png";
+import pic5 from "../../../userImages/catMask.png";
+import pic6 from "../../../userImages/dracula.png";
+import pic7 from "../../../userImages/ninja.png";
+import pic8 from "../../../userImages/pirate.png";
+
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -35,37 +43,37 @@ const UserList = () => {
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="http://i.pravatar.cc/300?img=4"
+          image={pic2}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+          image={pic3}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+          image={pic4}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+          image={pic5}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+          image={pic6}
+          />
+         <UserCard
+          name="Mark Artishuk"
+          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
+          image={pic7}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image="https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"
+          image={pic8}
         />
       </Paper>
     </div>
