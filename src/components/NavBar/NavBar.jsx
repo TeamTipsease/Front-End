@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
   },
   tabLink: {
     width: "20%",
-    minWidth: "100px"
+    minWidth: "75px",
+    fontSize: 12
   },
   tabIndicator: {
     backgroundColor: "#ffffffdd"
@@ -43,12 +44,10 @@ const findActiveTabIndex = (location, loggedIn) => {
   //This fixes the refresh bug, whenever the user refreshes, the tabs will default back to 0 (which will always route the user to "/".)
   if (!loggedIn) {
     switch (location.pathname) {
-      case "/":
-        return 0;
       case "/register":
-        return 1;
+        return 0;
       case "/login":
-        return 2;
+        return 1;
       default:
         return 0;
     }
@@ -56,8 +55,10 @@ const findActiveTabIndex = (location, loggedIn) => {
     switch (location.pathname) {
       case "/dashboard":
         return 0;
-      case "/profile":
+      case "/settings":
         return 1;
+      case "/profile":
+        return 2;
       default:
         return 0;
     }
@@ -77,18 +78,15 @@ const NavBar = () => {
     //Only runs when a user manually changes the url and presses enter (Will make a http request that refreshes the page)
     const activeTabIndex = findActiveTabIndex(history.location, loggedIn);
     setCurrentTab(activeTabIndex);
-  }, [history.location]);
+  }, [history.location, loggedIn]);
 
   const handleTabChange = (currentValue, newValue) => {
     if (!loggedIn) {
       switch (newValue) {
         case 0:
-          history.push("/");
-          break;
-        case 1:
           history.push("/register");
           break;
-        case 2:
+        case 1:
           history.push("/login");
           break;
         default:
@@ -101,6 +99,9 @@ const NavBar = () => {
           history.push("/dashboard");
           break;
         case 1:
+          history.push("/settings");
+          break;
+        case 2:
           history.push("/profile");
           break;
         default:
@@ -143,7 +144,7 @@ const NavBar = () => {
               classes={{ indicator: classes.tabIndicator }}
             >
               <Tab label="Dashboard" className={classes.tabLink} />
-
+              <Tab label="Settings" className={classes.tabLink} />
               <Tab label="Profile" className={classes.tabLink} />
             </Tabs>
             <AccountCircleIcon className={classes.avatarIcon} />
@@ -159,8 +160,6 @@ const NavBar = () => {
             className={classes.tabContainer}
             classes={{ indicator: classes.tabIndicator }}
           >
-            <Tab label="Home" className={classes.tabLink} />
-
             <Tab label="Register" className={classes.tabLink} />
             <Tab label="Login" className={classes.tabLink} />
           </Tabs>

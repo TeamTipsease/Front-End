@@ -1,11 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -18,19 +19,17 @@ const useStyles = makeStyles(theme => ({
       boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
     }
   },
-  media: {
-    paddingTop: "55%" //Height of image
-  },
   content: {
     textAlign: "left",
-    padding: 24
+    padding: 20
   },
   divider: {
     marginTop: `15px`,
-    marginBottom: `10px`
+    marginBottom: `20px`
   },
   heading: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign: "center"
   },
   button: {
     margin: 0
@@ -39,18 +38,25 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 1.5,
     fontSize: "0.82em",
     opacity: "0.54"
+  },
+  bigAvatar: {
+    margin: "0 auto",
+    marginTop: 20,
+    width: 100,
+    height: 100
   }
 }));
 
-const UserCard = ({ name, blurb, image }) => {
+const UserCard = ({ name, blurb, image, id = 1 }) => {
+  const history = useHistory();
   const classes = useStyles();
-
   const handleClick = () => {
-    console.log("Button clicked.");
+    history.push(`/worker/${id}`);
   };
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} image={image} />
+      <Avatar alt="Remy Sharp" src={image} className={classes.bigAvatar} />
+
       <CardContent className={classes.content}>
         <Typography className={classes.heading} variant={"h6"}>
           {name}
@@ -60,7 +66,13 @@ const UserCard = ({ name, blurb, image }) => {
         </Typography>
         <Divider className={classes.divider} light />
 
-        <Button onClick={handleClick} className={classes.button} fullWidth>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleClick}
+          className={classes.button}
+          fullWidth
+        >
           View Profile
         </Button>
       </CardContent>

@@ -10,7 +10,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import { Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/actions/userActions";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -52,27 +54,27 @@ const useStyles = makeStyles(theme => ({
 
 export default function LogIn() {
   const classes = useStyles();
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onChangeNameHandler = (event) =>{
+  const dispatch = useDispatch();
+  const { loggedIn, isLoggingIn } = useSelector(state => state.userReducer);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  console.log("Logged: ", loggedIn);
+  const onChangeNameHandler = event => {
     event.preventDefault();
-    console.log('user name is: ', userName)
-    return setUserName(event.target.value)
-  }
-const onChangePasswordHandler = (event) => {
-  event.preventDefault();
-  console.log('user password is: ', password)
+    return setUserName(event.target.value);
+  };
+  const onChangePasswordHandler = event => {
+    event.preventDefault();
+    return setPassword(event.target.value);
+  };
 
-  return setPassword(event.target.value)
-}
+  const onSubmitHandler = event => {
+    event.preventDefault();
+    dispatch(login({ username: userName, password }));
+    // redux logic for form submission goes here!
+  };
 
-const onSubmitHandler = (event) =>{
-  event.preventDefault();
-  console.log('clicking works')
-
-  // redux logic for form submission goes here!
-}
+  if (loggedIn) return <Redirect to="/dashboard" />;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -119,6 +121,7 @@ const onSubmitHandler = (event) =>{
             color="primary"
             className={classes.submit}
             onClick={onSubmitHandler}
+            disabled={isLoggingIn}
           >
             Log In
           </Button>
