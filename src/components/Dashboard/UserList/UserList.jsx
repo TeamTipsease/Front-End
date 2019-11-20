@@ -40,7 +40,7 @@ const UserList = () => {
     axiosWithAuth 
       .get('https://tipseasebackend.herokuapp.com/api/worker/')
       .then(response => {
-        setUserData(response.data.results);
+        setUserData(response.data);
         console.log('user data is:', response.data);
       })
       .catch(error =>{
