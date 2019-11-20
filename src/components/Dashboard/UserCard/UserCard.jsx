@@ -10,9 +10,11 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   card: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
     width: "100%",
     boxSizing: "border-box",
-    margin: "auto",
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
     "&:hover": {
@@ -32,7 +34,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center"
   },
   button: {
-    margin: 0
+    margin: 0,
+    alignSelf: "flex-end"
   },
   subheading: {
     lineHeight: 1.5,

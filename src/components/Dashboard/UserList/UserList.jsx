@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     maxWidth: "1200px",
     gridTemplateColumns: "repeat( auto-fit, minmax(235px, 1fr) )",
+    gridAutoRows: "1fr",
     gap: "15px",
     margin: 25,
     boxShadow: "none"
@@ -39,7 +40,6 @@ const getRandomUserAvatar = () => {
 
 const UserList = () => {
   const classes = useStyles();
-
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     axiosWithAuth()
@@ -56,38 +56,17 @@ const UserList = () => {
   return (
     <div className={classes.gridContainer}>
       <Paper className={classes.grid}>
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-          id={3}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-          id={1}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={getRandomUserAvatar()}
-        />
+        {userData.map((user, index) => {
+          return (
+            <UserCard
+              name={user.name}
+              blurb={user.tagline}
+              image={getRandomUserAvatar()}
+              id={user.user_id}
+              key={index}
+            />
+          );
+        })}
       </Paper>
     </div>
   );
