@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import { TextField, Button } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
+import { updateUser } from "../../store/actions/userActions";
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: 25,
@@ -34,16 +36,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const emptyForm = {
-//   name: "",
-//   month_at_job: 0,
-//   info: "",
-//   tagline: ""
-// };
-
 const SettingsView = () => {
   const dispatch = useDispatch();
-  const { info, name, tagline, month_at_job } = useSelector(
+  const { info, name, tagline, month_at_job, id } = useSelector(
     state => state.userReducer.user
   );
   const userFormData = { info, name, tagline, month_at_job };
@@ -52,6 +47,8 @@ const SettingsView = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log("Clicked to update.");
+    dispatch(updateUser(id, formData));
   };
 
   const handleChange = e => {
