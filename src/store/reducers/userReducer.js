@@ -17,7 +17,13 @@ import {
 
 const initialState = {
   user: {
-    name: ""
+    name: "",
+    info: "37 yr Male living in Florida",
+    month_at_job: 6,
+    name: "Tony",
+    tagline: "We are not in Kansas anymore.",
+    tip: 3,
+    user_id: 1
   },
 
   isLoggingIn: false,
@@ -29,7 +35,17 @@ const initialState = {
 
   fetchingWorkers: false,
   fetchWorkersError: "",
-  workers: [],
+  workers: [
+    {
+      id: 1,
+      info: "37 yr Male living in Florida",
+      month_at_job: 6,
+      name: "Tony",
+      tagline: "We are not in Kansas anymore.",
+      tip: 3,
+      user_id: 1
+    }
+  ],
 
   isUpdatingUser: false,
   updateUserError: ""

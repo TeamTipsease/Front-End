@@ -14,7 +14,7 @@ import { userReducer } from "./store/reducers/userReducer";
 //Theme color imports
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-// import blue from "@material-ui/core/colors/blue";
+import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 
@@ -31,7 +31,8 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: primaryColor
-    }
+    },
+    secondary: grey
   }
 });
 

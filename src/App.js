@@ -16,6 +16,7 @@ import {
 } from "./store/actions/userActions";
 import Axios from "axios";
 import { axiosWithAuth } from "./utils/axiosAuth";
+import WorkerView from "./components/WorkerView/WorkerView";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,19 +28,17 @@ function App() {
   }, []);
 
   const handleLogin = () => {
-    console.log("workers");
     const credentials = {
       username: "mark",
       password: "test"
     };
-
-    dispatch(register(credentials));
+    // dispatch(getWorkers());
     // dispatch(login(credentials));
 
-    // axiosWithAuth()
-    //   .get("/api/worker/7")
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
+    axiosWithAuth()
+      .get("/api/auth")
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
     // dispatch(login(credentials));
   };
 
@@ -48,10 +47,11 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path="/">
-          <h1>Test</h1>
+          {/* <h1>Test</h1>
           <Button color="secondary" onClick={handleLogin} variant="contained">
             Login
-          </Button>
+          </Button> */}
+          <WorkerView />
         </Route>
         <Route exact path="/login" component={LogIn}>
           {/* Put login component here */}
