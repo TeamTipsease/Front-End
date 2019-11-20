@@ -3,8 +3,8 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
-import UserForm from './components/Registration/UserForm'
-import LogIn from './components/LogIn';
+import UserForm from "./components/Registration/UserForm";
+import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import {
 import Axios from "axios";
 import { axiosWithAuth } from "./utils/axiosAuth";
 import WorkerView from "./components/WorkerView/WorkerView";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,12 +35,12 @@ function App() {
       password: "test"
     };
     // dispatch(getWorkers());
-    // dispatch(login(credentials));
-
-    axiosWithAuth()
-      .get("/api/auth")
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    dispatch(login(credentials));
+    // dispatch(register(credentials));
+    // axiosWithAuth()
+    //   .get("/api/auth")
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
     // dispatch(login(credentials));
   };
 
@@ -48,34 +49,34 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path="/">
-          {/* <h1>Test</h1>
+          <h1>Test</h1>
           <Button color="secondary" onClick={handleLogin} variant="contained">
             Login
-          </Button> */}
+          </Button>
           <WorkerView />
         </Route>
         <Route exact path="/login" component={LogIn}>
           {/* Put login component here */}
         </Route>
 
-          <Route exact path="/register" component={UserForm}>
-          </Route>
-
+        <Route exact path="/register" component={UserForm}></Route>
 
         <PrivateRoute path="/dashboard">
           {/* Dashboard component here. */}
           <Dashboard />
         </PrivateRoute>
-
-          <PrivateRoute path="/worker-profile/:id">
-            {/*Service worker profile here (Passing in ID of worker through path)  */}
-          </PrivateRoute>
-          <PrivateRoute path="/worker-edit/:id">
-            {/* Component for editing worker profile (Passin in ID of worker through path) */}
-          </PrivateRoute>
-        </Switch>
-      </div>
-    );
-  }
+        <PrivateRoute path="/profile">
+          <Profile />
+        </PrivateRoute>
+        <PrivateRoute path="/worker-profile/:id">
+          {/*Service worker profile here (Passing in ID of worker through path)  */}
+        </PrivateRoute>
+        <PrivateRoute path="/worker-edit/:id">
+          {/* Component for editing worker profile (Passin in ID of worker through path) */}
+        </PrivateRoute>
+      </Switch>
+    </div>
+  );
+}
 
 export default App;
