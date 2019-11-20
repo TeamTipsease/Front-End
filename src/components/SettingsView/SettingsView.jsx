@@ -68,12 +68,10 @@ const SettingsView = () => {
 
   useEffect(() => {
     setSnackOpen(updatedUser);
-    console.log("Set snack to", updatedUser);
   }, [updatedUser]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("Clicked to update.");
     dispatch(updateUser(user_id, formData));
   };
 
