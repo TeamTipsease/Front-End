@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserCard from "../UserCard/UserCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
-import { axiosWithAuth } from "../../../utils/axiosAuth"
+import { axiosWithAuth } from "../../../utils/axiosAuth";
 import pic1 from "../../../userImages/angel.png";
 import pic2 from "../../../userImages/bagHead.png";
 import pic3 from "../../../userImages/bionicEye.png";
@@ -38,21 +38,20 @@ const getRandomUserAvatar = () => {
 };
 
 const UserList = () => {
-  const [workerList, setWorkerList] = useState([]);
   const classes = useStyles();
 
   const [userData, setUserData] = useState([]);
   useEffect(() => {
-    axiosWithAuth 
-      .get('https://tipseasebackend.herokuapp.com/api/worker/')
+    axiosWithAuth()
+      .get("https://tipseasebackend.herokuapp.com/api/worker/")
       .then(response => {
         setUserData(response.data);
-        console.log('user data is:', response.data);
+        console.log("user data is:", response.data);
       })
-      .catch(error =>{
+      .catch(error => {
         console.log("The data was now returned", error);
       });
-   }, []);
+  }, []);
 
   return (
     <div className={classes.gridContainer}>
