@@ -12,7 +12,10 @@ import {
   UPDATE_USER_SUCCESS,
   REGISTER_FAIL,
   REGISTER_START,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS
 } from "../actions/userActions";
 
 const initialState = {
@@ -47,12 +50,21 @@ const initialState = {
     }
   ],
 
+  isDeleting: false,
+  deleteError: "",
+
   isUpdatingUser: false,
   updateUserError: ""
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DELETE_USER_START:
+      return { ...state, isDeleting: true, deleteError: "" };
+    case DELETE_USER_FAIL:
+      return { ...state, isDeleting: false, deleteError: action.payload };
+    case DELETE_USER_SUCCESS:
+      return { ...state, isDeleting: false };
     case REGISTER_START:
       return { ...state, isRegistering: true, registerError: "" };
     case REGISTER_SUCCESS:
