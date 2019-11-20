@@ -9,7 +9,10 @@ import {
   APP_UPDATE,
   UPDATE_USER_FAIL,
   UPDATE_USER_START,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_START,
+  REGISTER_SUCCESS
 } from "../actions/userActions";
 
 const initialState = {
@@ -21,6 +24,9 @@ const initialState = {
   loggedIn: false,
   loginError: "",
 
+  isRegistering: false,
+  registerError: "",
+
   fetchingWorkers: false,
   fetchWorkersError: "",
   workers: [],
@@ -31,6 +37,13 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REGISTER_START:
+      return { ...state, isRegistering: true, registerError: "" };
+    case REGISTER_SUCCESS:
+      return { ...state, isRegistering: false, loggedIn: true };
+    case REGISTER_FAIL:
+      return { ...state, isRegistering: false, registerError: action.payload };
+
     case UPDATE_USER_START:
       return { ...state, isUpdatingUser: true };
     case UPDATE_USER_FAIL:
