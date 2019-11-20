@@ -7,7 +7,7 @@ import UserForm from "./components/Registration/UserForm";
 import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { useDispatch } from "react-redux";
-import { updateApp } from "./store/actions/userActions";
+import { updateApp, register } from "./store/actions/userActions";
 import WorkerView from "./components/WorkerView/WorkerView";
 import Profile from "./components/Profile/Profile";
 import SettingsView from "./components/SettingsView/SettingsView";
@@ -17,6 +17,7 @@ function App() {
 
   useEffect(() => {
     dispatch(updateApp());
+    // dispatch(register({ username: "marky", password: "test" }));
   }, [dispatch]);
 
   return (
