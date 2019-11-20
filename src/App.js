@@ -11,6 +11,7 @@ import {
   login,
   getWorkers,
   getUser,
+  register,
   updateApp
 } from "./store/actions/userActions";
 import Axios from "axios";
@@ -32,12 +33,7 @@ function App() {
       password: "test"
     };
 
-    Axios.post(
-      "https://tipseasebackend.herokuapp.com/api/auth/login",
-      credentials
-    )
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    dispatch(register(credentials));
     // dispatch(login(credentials));
 
     // axiosWithAuth()

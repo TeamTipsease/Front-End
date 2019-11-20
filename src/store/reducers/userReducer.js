@@ -40,6 +40,7 @@ export const userReducer = (state = initialState, action) => {
     case REGISTER_START:
       return { ...state, isRegistering: true, registerError: "" };
     case REGISTER_SUCCESS:
+      localStorage.setItem("authToken", action.payload);
       return { ...state, isRegistering: false, loggedIn: true };
     case REGISTER_FAIL:
       return { ...state, isRegistering: false, registerError: action.payload };
