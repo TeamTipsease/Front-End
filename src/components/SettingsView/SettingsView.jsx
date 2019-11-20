@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { TextField, Button } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,15 +34,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const emptyForm = {
-  name: "",
-  month_at_job: 0,
-  info: "",
-  tagline: ""
-};
+// const emptyForm = {
+//   name: "",
+//   month_at_job: 0,
+//   info: "",
+//   tagline: ""
+// };
 
 const SettingsView = () => {
-  const [formData, setFormData] = useState(emptyForm);
+  const dispatch = useDispatch();
+  const { info, name, tagline, month_at_job } = useSelector(
+    state => state.userReducer.user
+  );
+  const userFormData = { info, name, tagline, month_at_job };
+  const [formData, setFormData] = useState(userFormData);
   const classes = useStyles();
 
   const handleSubmit = e => {
