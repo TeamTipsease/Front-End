@@ -29,6 +29,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const avatars = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+
+const getRandomUserAvatar = () => {
+  const randInt = random() * avatars.length;
+  return avatars[randInt];
+};
+
 const UserList = () => {
   const classes = useStyles();
   return (
