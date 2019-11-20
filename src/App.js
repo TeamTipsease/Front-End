@@ -31,7 +31,14 @@ function App() {
       username: "mark",
       password: "test"
     };
-    dispatch(login(credentials));
+
+    Axios.post(
+      "https://tipseasebackend.herokuapp.com/api/auth/login",
+      credentials
+    )
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    // dispatch(login(credentials));
 
     // axiosWithAuth()
     //   .get("/api/worker/7")

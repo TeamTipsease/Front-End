@@ -17,6 +17,10 @@ export const FETCH_USER_START = "FETCH_USER_START";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAIL = "FETCH_USER_FAIL";
 
+export const UPDATE_USER_START = "UPDATE_USER_START";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAIL = "UPDATE_USER_FAIL";
+
 //login action will handle all login types.
 export const login = credentials => dispatch => {
   dispatch({ type: LOGIN_START });
@@ -63,4 +67,19 @@ export const updateApp = () => dispatch => {
 
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
+};
+
+export const updateUser = id => dispatch => {
+  dispatch({ type: UPDATE_USER_START });
+
+  axiosWithAuth()
+    .put("/")
+    .then(res => {
+      console.log(res);
+      dispatch({ type: UPDATE_USER_SUCCESS });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: UPDATE_USER_FAIL, payload: err.message });
+    });
 };

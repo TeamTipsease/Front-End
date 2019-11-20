@@ -6,7 +6,10 @@ import {
   FETCH_WORKERS_START,
   FETCH_WORKERS_SUCCESS,
   LOGOUT,
-  APP_UPDATE
+  APP_UPDATE,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_START,
+  UPDATE_USER_SUCCESS
 } from "../actions/userActions";
 
 const initialState = {
@@ -20,11 +23,25 @@ const initialState = {
 
   fetchingWorkers: false,
   fetchWorkersError: "",
-  workers: []
+  workers: [],
+
+  isUpdatingUser: false,
+  updateUserError: ""
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_USER_START:
+      return { ...state, isUpdatingUser: true };
+    case UPDATE_USER_FAIL:
+      return {
+        ...state,
+        isUpdatingUser: false,
+        updateUserError: action.payload
+      };
+
+    case UPDATE_USER_SUCCESS:
+      return { ...state, isUpdatingUser: false, updateUserError: "" };
     case APP_UPDATE:
       return { ...state, loggedIn: action.payload.loggedIn };
     case LOGOUT:
@@ -33,7 +50,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_FAIL:
       return { ...state, loginError: action.payload, isLoggingIn: false };
     case LOGIN_START:
-      return { ...state, isLoggingIn: true };
+      return { ...state, isLoggingIn: true, loginError: "" };
     case LOGIN_SUCCESS:
       localStorage.setItem("authToken", action.payload);
       return { ...state, isLoggingIn: false, loggedIn: true, user: {} }; //TODO: Set user data from payload.
