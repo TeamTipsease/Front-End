@@ -14,8 +14,13 @@ import { userReducer } from "./store/reducers/userReducer";
 //Theme color imports
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+<<<<<<< HEAD
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
+=======
+// import blue from "@material-ui/core/colors/blue";
+// import red from "@material-ui/core/colors/red";
+>>>>>>> f0f7d5ac5de11d3475181ce62ca43f2ff74a5c9a
 import green from "@material-ui/core/colors/green";
 
 const rootReducer = combineReducers({ userReducer });
