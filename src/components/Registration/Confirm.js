@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -15,6 +16,7 @@ const Confirm = (props) =>  {
     console.log(props);
     const classes = useStyles();
     const next = e => {
+        
         e.preventDefault();
         props.nextStep();
     }
@@ -31,7 +33,7 @@ const Confirm = (props) =>  {
                 <Typography variant="h5" component="h2">
                     {values.userName}
                 </Typography>
-                <Typography component="p">
+                <Typography variant="h5" component="h2">
                     {values.password}
                 </Typography>
                 <br/>

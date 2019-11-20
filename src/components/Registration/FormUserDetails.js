@@ -3,12 +3,13 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-
+import Checkbox from '@material-ui/core/Checkbox'
+import Typography from '@material-ui/core/Typography';
+import { FormLabel } from "@material-ui/core";
 
 
 
 const FormUserDetails = (props) =>  {
-    console.log(props);
     const next = e => {
         e.preventDefault();
         props.nextStep();
@@ -42,6 +43,15 @@ const FormUserDetails = (props) =>  {
                             autoComplete="current-password"
                         />
                         <br/>
+                        
+                        <Checkbox checked={values.checkedA}
+                        onChange={handleChange("checkedA")}
+                        value="checkedA"
+                        label="Are You A Service Worker?"
+                        placeholder="Are You A Service Worker"
+                        color= "primary"
+                        inputProps={{"aria-label": "uncontrolled-checkbox"}}/>
+                        <FormLabel>Are You A Service Worker?</FormLabel>
                         <Button
                             type="submit"
                             margin="normal"

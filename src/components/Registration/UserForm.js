@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import FormUserDetails from './FormUserDetails';
 import Confirm  from './Confirm';
-import Success from './Success'
+
 
 const UserForm = () =>  {
     const [users, setUsers] = useState({step: 1,
         userName: "",
         password: "",
+        checkedA: false,
         })
         
 
     const nextStep = () => {
         const {step} = users;
-        setUsers({
+        setUsers({...users,
             step: step + 1
         })
         console.log(step);
@@ -20,7 +21,7 @@ const UserForm = () =>  {
 
     const prevStep = () => {
         const {step} = users;
-        setUsers({
+        setUsers({...users,
             step: step - 1
         })
     }
@@ -51,13 +52,7 @@ const UserForm = () =>  {
                     />
                     
                 )
-            case 3:
-                return(
-                    <Success/>
-                )
         }
-        console.log(userName);
-        console.log(password);
         return (
             <div>
                 
