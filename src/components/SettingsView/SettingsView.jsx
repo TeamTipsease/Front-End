@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 
-import { updateUser } from "../../store/actions/userActions";
+import { updateUser, deleteUser } from "../../store/actions/userActions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -78,6 +78,7 @@ const SettingsView = () => {
   const handleDelete = e => {
     e.preventDefault();
     console.log("Delete button clicked");
+    dispatch(deleteUser(user_id));
   };
 
   const handleChange = e => {
