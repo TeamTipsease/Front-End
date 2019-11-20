@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -26,17 +26,35 @@ const useStyles = makeStyles(theme => ({
     margin: "10px auto"
   },
   nameTextField: {
-    width: "70%"
+    width: "60%"
   },
   monthTextField: {
-    width: "27%"
+    width: "35%"
   }
 }));
+
+const emptyForm = {
+  name: "",
+  month_at_job: 0,
+  info: "",
+  tagline: ""
+};
+
 const SettingsView = () => {
+  const [formData, setFormData] = useState(emptyForm);
   const classes = useStyles();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <Paper className={classes.root}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Typography className={classes.title} variant="h5" component="h3">
           Profile Settings
         </Typography>
@@ -44,14 +62,20 @@ const SettingsView = () => {
           <TextField
             className={classes.nameTextField}
             label="Name"
+            name="name"
             margin="normal"
             variant="outlined"
+            value={formData.name}
+            onChange={handleChange}
           />
           <TextField
             className={classes.monthTextField}
             label="Months At Job"
             type="number"
+            name="month_at_job"
             margin="normal"
+            onChange={handleChange}
+            value={formData.month_at_job}
             variant="outlined"
           />
         </div>
@@ -60,19 +84,26 @@ const SettingsView = () => {
           className={classes.textField}
           label="Tagline"
           fullWidth
+          name="tagline"
           margin="normal"
+          onChange={handleChange}
+          value={formData.tagline}
           variant="outlined"
         />
         <TextField
           className={classes.textField}
           label="Info"
           fullWidth
+          name="info"
           margin="normal"
+          value={formData.info}
+          onChange={handleChange}
           variant="outlined"
         />
         <Button
           className={classes.button}
           fullWidth
+          type="submit"
           variant="contained"
           color="secondary"
         >
