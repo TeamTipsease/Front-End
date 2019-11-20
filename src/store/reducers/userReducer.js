@@ -21,7 +21,6 @@ import {
 
 const initialState = {
   user: {
-    name: "",
     info: "37 yr Male living in Florida",
     month_at_job: 6,
     name: "Tony",

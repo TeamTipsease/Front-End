@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     dispatch(updateApp());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
