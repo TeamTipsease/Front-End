@@ -1,6 +1,5 @@
 
-import React, { Component } from "react";
-
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -8,36 +7,25 @@ import Container from '@material-ui/core/Container';
 
 
 
-export class FormUserDetails extends Component {
-    continue = e => {
+const FormUserDetails = (props) =>  {
+    console.log(props);
+    const next = e => {
         e.preventDefault();
-        this.props.nextStep();
+        props.nextStep();
     }
-    render() {
-        const {values, handleChange} = this.props;
+
+        const {values, handleChange} = props;
         return (
             <Container>
-                    <React.Fragment>
                         <TextField 
-                            onChange={handleChange("fullName")}
-                            defaultValue={values.fullName}
+                            onChange={handleChange("userName")}
+                            defaultValue={values.userName}
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
-                            name="fullName"
-                            label="Full Name"
-                        />
-                        <br/>
-                        <TextField 
-                            onChange={handleChange("email")}
-                            defaultValue={values.email}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="email"
-                            label="Email"
+                            name="userName"
+                            label="User Name"
                         />
                         <br/>
                         <TextField
@@ -62,13 +50,12 @@ export class FormUserDetails extends Component {
                             label="Continue"
                             color="primary"
                             style={styles.button}
-                            onClick={this.continue}
+                            onClick={next}
                         >Continue</Button>
-                    </React.Fragment>
             </Container>
         )
     }
-}
+
 
 const styles = {
     button: {

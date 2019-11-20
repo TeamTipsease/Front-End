@@ -1,13 +1,12 @@
-import React, {Component} from "react";
+import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NavBar from "./components/NavBar/NavBar";
 import LogIn from './components/LogIn';
-import UserForm from "./components/Registration/UserForm"
+import UserForm from './components/Registration/UserForm'
 
-class App extends Component {
-  render() {
+const App = () => {
     return (
       <div className="App">
         <NavBar />
@@ -36,6 +35,5 @@ class App extends Component {
       </div>
     );
   }
-}
 
 export default App;

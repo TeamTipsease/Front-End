@@ -1,29 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 
 
 
 
 
-export class Success extends Component {
-    continue = e => {
-        e.preventDefault();
-        this.props.nextStep();
-    }
 
-    back = e => {
-        e.preventDefault();
-        this.props.prevStep();
-    }
-
-    render() {
+const Success = () => {
         return (
-                <React.Fragment>
+                <div>
                     <h1>Thank You For Your Submission</h1>
                     <p>You Will Recieve A Confirmation Email Shortly</p>
-                </React.Fragment>
+                </div>
         )
     }
-}
+
 
 
 

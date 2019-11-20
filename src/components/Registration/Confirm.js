@@ -1,77 +1,66 @@
-import React, { Component } from "react";
-import {List} from "@material-ui/core/List/List";
-import {ListItem} from "@material-ui/core/ListItem/ListItem"
+import React from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 
+const useStyles = makeStyles({
+    root: {
+        padding: "3px 2px",
+    },
+  });
 
-export class Confirm extends Component {
-    continue = e => {
+const Confirm = (props) =>  {
+    console.log(props);
+    const classes = useStyles();
+    const next = e => {
         e.preventDefault();
-        this.props.nextStep();
+        props.nextStep();
     }
 
-    back = e => {
+    const back = e => {
         e.preventDefault();
-        this.props.prevStep();
+        props.prevStep();
     }
 
-    render() {
-        const { values: {fullName, email, password, occupation, city, bio} } = this.props;
+    const {values} = props;
+    console.log(values)
         return (
+            <Paper className={classes.root}>
+                <Typography variant="h5" component="h2">
+                    {values.userName}
+                </Typography>
+                <Typography component="p">
+                    {values.password}
+                </Typography>
+                <br/>
+            <Button
+                type="submit"
+                margin="normal"
+                fullWidth
+                variant="contained"
+                label="Continue"
+                color="primary"
+                style={styles.button}
+                onClick={next}
+            >Continue
+            </Button>
+            <Button
+                type="submit"
+                margin="normal"
+                fullWidth
+                variant="contained"
+                label="Continue"
+                color="primary"
+                style={styles.button}
+                onClick={back}
+            >Go Back
+            </Button>
+            </Paper>
+            
 
-                <React.Fragment>
-                    <List>
-                        <ListItem 
-                            primaryText="Full Name"
-                            secondaryText={ fullName }
-                        />
-                        <ListItem 
-                            primaryText="Email"
-                            secondaryText={ email }
-                        />
-                        <ListItem 
-                            primaryText="Password"
-                            secondaryText={ password }
-                        />
-                        <ListItem 
-                            primaryText="Occupation"
-                            secondaryText={ occupation }
-                        />
-                        <ListItem 
-                            primaryText="City"
-                            secondaryText={ city }
-                        />
-                        <ListItem 
-                            primaryText="Bio"
-                            secondaryText={ bio }
-                        />
-                    </List>
-                    <br/>
-                    <Button
-                    type="submit"
-                    margin="normal"
-                    width="48%"
-                    variant="contained"
-                    label="Continue & Confirm"
-                    color="primary"
-                    style={styles.button}
-                    onClick={this.continue}
-                    >Continue & Confirm</Button>
-                    <br/>
-                    <Button
-                    type="submit"
-                    variant="contained"
-                    margin="normal"
-                    width="50%"
-                    label="Go Back"
-                    
-                    style={styles.button}
-                    onClick={this.back}
-                    >Go Back</Button>
-                </React.Fragment>
-        );
-    }
+        )
 }
 
 
