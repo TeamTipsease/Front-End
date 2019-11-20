@@ -5,13 +5,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useSelector } from "react-redux";
-import { TextField } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-
 import Input from "@material-ui/core/Input";
-
 import InputAdornment from "@material-ui/core/InputAdornment";
+
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
   card: {
@@ -88,6 +87,7 @@ const WorkerView = () => {
             variant="contained"
             className={classes.button}
             color="secondary"
+            onClick={handleTipClick}
           >
             Tip
           </Button>

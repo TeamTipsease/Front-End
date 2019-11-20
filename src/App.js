@@ -68,11 +68,9 @@ function App() {
         <PrivateRoute path="/profile">
           <Profile />
         </PrivateRoute>
-        <PrivateRoute path="/worker-profile/:id">
+        <PrivateRoute path="/worker/:id">
           {/*Service worker profile here (Passing in ID of worker through path)  */}
-        </PrivateRoute>
-        <PrivateRoute path="/worker-edit/:id">
-          {/* Component for editing worker profile (Passin in ID of worker through path) */}
+          <WorkerView />
         </PrivateRoute>
       </Switch>
     </div>

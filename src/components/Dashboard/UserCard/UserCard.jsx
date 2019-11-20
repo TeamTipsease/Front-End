@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -49,11 +50,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserCard = ({ name, blurb, image }) => {
+const UserCard = ({ name, blurb, image, id = 1 }) => {
+  const history = useHistory();
   const classes = useStyles();
-
   const handleClick = () => {
     console.log("Button clicked.");
+    history.push(`/worker/${id}`);
   };
   return (
     <Card className={classes.card}>

@@ -46,11 +46,13 @@ const UserList = () => {
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
           image={getRandomUserAvatar()}
+          id={3}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
           image={getRandomUserAvatar()}
+          id={1}
         />
         <UserCard
           name="Mark Artishuk"
