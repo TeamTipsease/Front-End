@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
   },
   tabLink: {
     width: "20%",
-    minWidth: "85px"
+    minWidth: "75px",
+    fontSize: 12
   },
   tabIndicator: {
     backgroundColor: "#ffffffdd"
