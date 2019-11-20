@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import UserCard from "../UserCard/UserCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
@@ -12,7 +11,6 @@ import pic5 from "../../../userImages/catMask.png";
 import pic6 from "../../../userImages/dracula.png";
 import pic7 from "../../../userImages/ninja.png";
 import pic8 from "../../../userImages/pirate.png";
-
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -32,7 +30,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const avatars = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+
+const getRandomUserAvatar = () => {
+  const randInt = Math.floor(Math.random() * avatars.length);
+  return avatars[randInt];
+};
+
 const UserList = () => {
+  const [workerList, setWorkerList] = useState([]);
   const classes = useStyles();
 
   const [userData, setUserData] = useState([]);
@@ -54,42 +60,34 @@ const UserList = () => {
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic1}
+          image={getRandomUserAvatar()}
+          id={3}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic2}
+          image={getRandomUserAvatar()}
+          id={1}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic3}
+          image={getRandomUserAvatar()}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic4}
+          image={getRandomUserAvatar()}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic5}
+          image={getRandomUserAvatar()}
         />
         <UserCard
           name="Mark Artishuk"
           blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic6}
-          />
-         <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic7}
-        />
-        <UserCard
-          name="Mark Artishuk"
-          blurb="I'm a hard worker who works hard and hard and hard so tip me please."
-          image={pic8}
+          image={getRandomUserAvatar()}
         />
       </Paper>
     </div>
