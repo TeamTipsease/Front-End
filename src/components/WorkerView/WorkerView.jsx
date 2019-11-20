@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 const useStyles = makeStyles({
   card: {
     width: "80%",
-    maxWidth: 800,
+    maxWidth: 650,
     margin: "25px auto",
     textAlign: "center"
   },

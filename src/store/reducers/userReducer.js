@@ -15,7 +15,8 @@ import {
   REGISTER_SUCCESS,
   DELETE_USER_FAIL,
   DELETE_USER_START,
-  DELETE_USER_SUCCESS
+  DELETE_USER_SUCCESS,
+  SET_UPDATED_USER_FLAG
 } from "../actions/userActions";
 
 const initialState = {
@@ -26,7 +27,7 @@ const initialState = {
     name: "Tony",
     tagline: "We are not in Kansas anymore.",
     tip: 3,
-    user_id: 1
+    user_id: 7
   },
 
   isLoggingIn: false,
@@ -54,7 +55,8 @@ const initialState = {
   deleteError: "",
 
   isUpdatingUser: false,
-  updateUserError: ""
+  updateUserError: "",
+  updatedUser: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -74,7 +76,7 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, isRegistering: false, registerError: action.payload };
 
     case UPDATE_USER_START:
-      return { ...state, isUpdatingUser: true };
+      return { ...state, isUpdatingUser: true, updatedUser: false };
     case UPDATE_USER_FAIL:
       return {
         ...state,
@@ -83,7 +85,13 @@ export const userReducer = (state = initialState, action) => {
       };
 
     case UPDATE_USER_SUCCESS:
-      return { ...state, isUpdatingUser: false, updateUserError: "" };
+      return {
+        ...state,
+        isUpdatingUser: false,
+        updateUserError: "",
+        updatedUser: true,
+        user: action.payload
+      };
     case APP_UPDATE:
       return { ...state, loggedIn: action.payload.loggedIn };
     case LOGOUT:
@@ -110,6 +118,8 @@ export const userReducer = (state = initialState, action) => {
         fetchingWorkers: false,
         fetchWorkersError: action.payload
       };
+    case SET_UPDATED_USER_FLAG:
+      return { ...state, updatedUser: action.payload };
     default:
       return state;
   }

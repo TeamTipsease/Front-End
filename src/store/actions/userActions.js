@@ -29,6 +29,8 @@ export const DELETE_USER_START = "DELETE_USER_START";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
 
+export const SET_UPDATED_USER_FLAG = "SET_UPDATED_USER_FLAG";
+
 //login action will handle all login types.
 export const login = credentials => dispatch => {
   dispatch({ type: LOGIN_START });
@@ -56,6 +58,10 @@ export const deleteUser = id => dispatch => {
       console.log(err);
       dispatch({ type: DELETE_USER_FAIL, payload: err });
     });
+};
+
+export const setUpdatedUserFlag = flag => dispatch => {
+  dispatch({ type: SET_UPDATED_USER_FLAG, payload: flag });
 };
 
 export const register = credentials => dispatch => {
@@ -114,10 +120,13 @@ export const updateUser = (id, updatedUser) => dispatch => {
   dispatch({ type: UPDATE_USER_START });
 
   axiosWithAuth()
-    .put("/api/worker/7", { id, ...updatedUser })
+    .put(`/api/worker/${id}`, { id, ...updatedUser })
     .then(res => {
       console.log(res);
-      dispatch({ type: UPDATE_USER_SUCCESS });
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
+      setTimeout(() => {
+        dispatch(setUpdatedUserFlag(false));
+      }, 6000);
     })
     .catch(err => {
       console.log(err);

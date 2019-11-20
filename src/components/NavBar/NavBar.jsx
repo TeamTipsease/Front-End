@@ -44,12 +44,10 @@ const findActiveTabIndex = (location, loggedIn) => {
   //This fixes the refresh bug, whenever the user refreshes, the tabs will default back to 0 (which will always route the user to "/".)
   if (!loggedIn) {
     switch (location.pathname) {
-      case "/":
-        return 0;
       case "/register":
-        return 1;
+        return 0;
       case "/login":
-        return 2;
+        return 1;
       default:
         return 0;
     }
@@ -86,12 +84,9 @@ const NavBar = () => {
     if (!loggedIn) {
       switch (newValue) {
         case 0:
-          history.push("/");
-          break;
-        case 1:
           history.push("/register");
           break;
-        case 2:
+        case 1:
           history.push("/login");
           break;
         default:
@@ -165,8 +160,6 @@ const NavBar = () => {
             className={classes.tabContainer}
             classes={{ indicator: classes.tabIndicator }}
           >
-            <Tab label="Home" className={classes.tabLink} />
-
             <Tab label="Register" className={classes.tabLink} />
             <Tab label="Login" className={classes.tabLink} />
           </Tabs>
