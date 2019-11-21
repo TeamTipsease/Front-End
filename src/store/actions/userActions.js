@@ -40,7 +40,7 @@ export const login = credentials => dispatch => {
     .then(res => {
       //Pass token to reducer.
       console.log("LOGIN RESPONSE: ", res);
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: LOGIN_FAIL, payload: err.response }));
 };
@@ -75,6 +75,7 @@ export const register = credentials => dispatch => {
     .then(res => {
       console.log(res);
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      getUser(res.data.userN.id);
     })
     .catch(err => {
       console.log(err);
@@ -97,18 +98,22 @@ export const getWorkers = () => dispatch => {
 export const getUser = id => dispatch => {
   dispatch({ type: FETCH_USER_START });
   axiosWithAuth()
-    .get(`/${id}`)
+    .get(`/api/auth/${id}`)
     .then(res => {
-      console.log(res);
+      console.log("GET USER: ", res);
+      dispatch({ type: FETCH_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err.response);
+      dispatch({ type: FETCH_USER_FAIL, payload: err });
     });
 };
 
 export const updateApp = () => dispatch => {
   const loggedIn = localStorage.getItem("authToken") ? true : false;
-  const updates = { loggedIn };
+  const id = parseInt(localStorage.getItem("userID"), 10);
+  dispatch(getUser(id));
+  const updates = { loggedIn, id };
   dispatch({ type: APP_UPDATE, payload: updates });
 };
 

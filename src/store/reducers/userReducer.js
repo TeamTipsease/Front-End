@@ -5,6 +5,9 @@ import {
   FETCH_WORKERS_FAIL,
   FETCH_WORKERS_START,
   FETCH_WORKERS_SUCCESS,
+  FETCH_USER_FAIL,
+  FETCH_USER_START,
+  FETCH_USER_SUCCESS,
   LOGOUT,
   APP_UPDATE,
   UPDATE_USER_FAIL,
@@ -21,13 +24,17 @@ import {
 
 const initialState = {
   user: {
-    info: "37 yr Male living in Florida",
-    month_at_job: 6,
-    name: "Tony",
-    tagline: "We are not in Kansas anymore.",
-    tip: 3,
-    user_id: 7
+    info: "",
+    month_at_job: 0,
+    name: "",
+    tagline: "",
+    tip: 0,
+    id: 0,
+    isServiceWorker: false
   },
+
+  isFetchingUser: false,
+  fetchUserError: "",
 
   isLoggingIn: false,
   loggedIn: false,
@@ -60,6 +67,25 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_USER_START:
+      return { ...state, isFetchingUser: true, fetchUserError: "" };
+    case FETCH_USER_FAIL:
+      return {
+        ...state,
+        isFetchingUser: false,
+        fetchUserError: action.payload
+      };
+    case FETCH_USER_SUCCESS:
+      return {
+        ...state,
+        isFetchingUser: false,
+        user: {
+          ...state.user,
+          isServiceWorker: action.payload.isServiceWorker,
+          name: action.payload.username
+        }
+      };
+
     case DELETE_USER_START:
       return { ...state, isDeleting: true, deleteError: "" };
     case DELETE_USER_FAIL:
@@ -69,7 +95,8 @@ export const userReducer = (state = initialState, action) => {
     case REGISTER_START:
       return { ...state, isRegistering: true, registerError: "" };
     case REGISTER_SUCCESS:
-      localStorage.setItem("authToken", action.payload);
+      localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("userID", action.payload.userN.id);
       return { ...state, isRegistering: false, loggedIn: true };
     case REGISTER_FAIL:
       return { ...state, isRegistering: false, registerError: action.payload };
@@ -92,16 +119,22 @@ export const userReducer = (state = initialState, action) => {
         user: action.payload
       };
     case APP_UPDATE:
-      return { ...state, loggedIn: action.payload.loggedIn };
+      return {
+        ...state,
+        loggedIn: action.payload.loggedIn,
+        user: { ...state.user, id: action.payload.id }
+      };
     case LOGOUT:
       localStorage.removeItem("authToken");
+      localStorage.removeItem("userID");
       return { ...state, loggedIn: false };
     case LOGIN_FAIL:
       return { ...state, loginError: action.payload, isLoggingIn: false };
     case LOGIN_START:
       return { ...state, isLoggingIn: true, loginError: "" };
     case LOGIN_SUCCESS:
-      localStorage.setItem("authToken", action.payload);
+      localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("userID", action.payload.user.id);
       return { ...state, isLoggingIn: false, loggedIn: true, user: {} }; //TODO: Set user data from payload.
     case FETCH_WORKERS_START:
       return { ...state, fetchingWorkers: true };

@@ -6,18 +6,21 @@ import NavBar from "./components/NavBar/NavBar";
 import UserForm from "./components/Registration/UserForm";
 import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard/Dashboard";
-import { useDispatch } from "react-redux";
-import { updateApp, register } from "./store/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateApp, register, getUser } from "./store/actions/userActions";
 import WorkerView from "./components/WorkerView/WorkerView";
 import Profile from "./components/Profile/Profile";
 import SettingsView from "./components/SettingsView/SettingsView";
 
 function App() {
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.userReducer.user);
+  console.log("CURRENT REDUX USER: ", user);
   useEffect(() => {
     dispatch(updateApp());
-    // dispatch(register({ username: "marky", password: "test" }));
+    // dispatch(
+    //   register({ username: "marks", password: "test", isServiceWorker: 1 })
+    // );
   }, [dispatch]);
 
   return (
