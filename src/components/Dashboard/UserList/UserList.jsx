@@ -43,7 +43,7 @@ const UserList = () => {
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     axiosWithAuth()
-      .get("https://tipseasebackend.herokuapp.com/api/worker/")
+      .get("/api/worker/")
       .then(response => {
         setUserData(response.data);
         console.log("user data is:", response.data);

@@ -29,6 +29,10 @@ export const DELETE_USER_START = "DELETE_USER_START";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
 
+export const TIP_START = "TIP_START";
+export const TIP_SUCCESS = "TIP_SUCCESS";
+export const TIP_FAIL = "TIP_FAIL";
+
 export const SET_UPDATED_USER_FLAG = "SET_UPDATED_USER_FLAG";
 
 //login action will handle all login types.
@@ -40,7 +44,7 @@ export const login = credentials => dispatch => {
     .then(res => {
       //Pass token to reducer.
       console.log("LOGIN RESPONSE: ", res);
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: LOGIN_FAIL, payload: err.response }));
 };
@@ -75,6 +79,7 @@ export const register = credentials => dispatch => {
     .then(res => {
       console.log(res);
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      getUser(res.data.userN.id);
     })
     .catch(err => {
       console.log(err);
@@ -97,18 +102,22 @@ export const getWorkers = () => dispatch => {
 export const getUser = id => dispatch => {
   dispatch({ type: FETCH_USER_START });
   axiosWithAuth()
-    .get(`/${id}`)
+    .get(`/api/worker/${id}`)
     .then(res => {
-      console.log(res);
+      console.log("GET USER: ", res);
+      dispatch({ type: FETCH_USER_SUCCESS, payload: res.data });
     })
     .catch(err => {
       console.log(err.response);
+      dispatch({ type: FETCH_USER_FAIL, payload: err });
     });
 };
 
 export const updateApp = () => dispatch => {
   const loggedIn = localStorage.getItem("authToken") ? true : false;
-  const updates = { loggedIn };
+  const id = parseInt(localStorage.getItem("userID"), 10);
+  dispatch(getUser(id));
+  const updates = { loggedIn, id };
   dispatch({ type: APP_UPDATE, payload: updates });
 };
 
@@ -131,5 +140,30 @@ export const updateUser = (id, updatedUser) => dispatch => {
     .catch(err => {
       console.log(err);
       dispatch({ type: UPDATE_USER_FAIL, payload: err.message });
+    });
+};
+
+export const tipWorker = (id, amount) => dispatch => {
+  dispatch({ type: TIP_START });
+
+  axiosWithAuth()
+    .get(`/api/worker/${id}`)
+    .then(res => {
+      let currentTip = res.data.tip;
+      currentTip += Math.abs(amount);
+      axiosWithAuth()
+        .put(`/api/worker/${id}`, { tip: currentTip })
+        .then(res => {
+          console.log(res);
+          dispatch({ type: TIP_SUCCESS });
+        })
+        .catch(err => {
+          console.log(err);
+          dispatchEvent({ type: TIP_FAIL, payload: err });
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatchEvent({ type: TIP_FAIL, payload: err });
     });
 };

@@ -57,7 +57,7 @@ const DeleteButton = withStyles(theme => ({
 }))(Button);
 const SettingsView = () => {
   const dispatch = useDispatch();
-  const { info, name, tagline, month_at_job, user_id } = useSelector(
+  const { info, name, tagline, month_at_job, id } = useSelector(
     state => state.userReducer.user
   );
   const updatedUser = useSelector(state => state.userReducer.updatedUser);
@@ -72,13 +72,13 @@ const SettingsView = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(updateUser(user_id, formData));
+    dispatch(updateUser(id, formData));
   };
 
   const handleDelete = e => {
     e.preventDefault();
     console.log("Delete button clicked");
-    dispatch(deleteUser(user_id));
+    dispatch(deleteUser(id));
   };
 
   const handleChange = e => {
