@@ -58,7 +58,7 @@ const UserCard = ({ name, blurb, image, id = 1 }) => {
   };
   return (
     <Card className={classes.card}>
-      <Avatar alt="Remy Sharp" src={image} className={classes.bigAvatar} />
+      <Avatar alt="user avatar" src={image} className={classes.bigAvatar} />
 
       <CardContent className={classes.content}>
         <Typography className={classes.heading} variant={"h6"}>
