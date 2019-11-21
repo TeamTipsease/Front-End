@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FormUserDetails from './FormUserDetails';
 import Confirm  from './Confirm';
-import UserList from '../Dashboard/UserList/UserList'
+import {Redirect} from "react-router-dom";
 
 
 
@@ -115,7 +115,7 @@ const UserForm = (props) =>  {
                 )
             case 3: 
                 return (
-                    <UserList/>
+                    <Redirect to="/dashboard"/>
                 )
         }
         return (
