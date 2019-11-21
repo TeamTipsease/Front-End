@@ -15,10 +15,10 @@ const FormUserDetails = (props) =>  {
         props.nextStep();
     }
 
-        const {values, handleChange} = props;
+        const {values, handleChange, handleChecked} = props;
         return (
             <Container>
-                <form onSubmit={() => {}}>
+                
                         <TextField 
                             onChange={handleChange("userName")}
                             defaultValue={values.userName}
@@ -28,6 +28,7 @@ const FormUserDetails = (props) =>  {
                             fullWidth
                             name="userName"
                             label="User Name"
+                            
                         />
                         <br/>
                         <TextField
@@ -46,7 +47,7 @@ const FormUserDetails = (props) =>  {
                         <br/>
                         
                         <Checkbox checked={values.checkedA}
-                        onChange={handleChange("checkedA")}
+                        onChange={handleChecked}
                         value="checkedA"
                         label="Are You A Service Worker?"
                         placeholder="Are You A Service Worker"
@@ -62,7 +63,7 @@ const FormUserDetails = (props) =>  {
                             style={styles.button}
                             onClick={next}
                         >Continue</Button>
-                        </form>
+                        
             </Container>
         )
     }

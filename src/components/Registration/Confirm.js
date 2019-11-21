@@ -16,15 +16,9 @@ const Confirm = (props) =>  {
     console.log(props);
     const classes = useStyles();
     const next = e => {
-            // axios 
-            // .post("https://tipseasebackend.herokuapp.com/api/auth/register")
-            // .then(res => {
-            //     setStatus(res.data);
-            //     console.log(res);
-            // })
-            // .catch(err => console.log(err.response));
         e.preventDefault();
         props.nextStep();
+        props.onSubmit(e);
     }
 
     const back = e => {
@@ -34,6 +28,7 @@ const Confirm = (props) =>  {
 
     const {values} = props;
     console.log(values)
+    console.log("this is props", props)
         return (
             <Paper className={classes.root}>
                 <Typography variant="h5" component="h2">
@@ -45,6 +40,7 @@ const Confirm = (props) =>  {
                 <br/>
             <Button
                 type="submit"
+                onSubmit={props.onSubmit}
                 margin="normal"
                 fullWidth
                 variant="contained"
@@ -52,10 +48,9 @@ const Confirm = (props) =>  {
                 color="primary"
                 style={styles.button}
                 onClick={next}
-            >Continue
+            >Confirm & Continue
             </Button>
             <Button
-                type="submit"
                 margin="normal"
                 fullWidth
                 variant="contained"

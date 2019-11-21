@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import FormUserDetails from './FormUserDetails';
 import Confirm  from './Confirm';
-import UserList from '../Dashboard/UserList/UserList'
-import {withFormik, Form, Field} from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+import {Redirect} from "react-router-dom";
 
 
 
-const UserForm = ({values, errors, touched, status}) =>  {
+
+
+const UserForm = (props) =>  {
     const [users, setUsers] = useState({step: 1,
         userName: "",
+        userNameError: "",
         password: "",
+        passwordError: "",
         checkedA: false,
         })
+        console.log(props);
         
-        useEffect(() => {
-            status && setUsers(user => [...user, status]);
-        }, [status]);
+        // useEffect(() => {
+        //     status && setUsers(user => [...user, status]);
+        // }, [status]);
 
     const nextStep = () => {
         const {step} = users;
@@ -34,21 +36,71 @@ const UserForm = ({values, errors, touched, status}) =>  {
         })
     }
 
-    const handleChange = input => e => {
-        setUsers({...users,[input]: e.target.value});
+    const validate = () => {
+        let isError = false;
+        const errors = {
+            userNameError: "",
+            passwordError: ""
+        };
+
+        if (users.userName.length < 5) {
+            isError = true;
+            errors.userNameError = "Username need to be at least 5 characters long"
+        }
+
+        if (isError) {
+            setUsers({
+                ...users,
+                ...errors
+            });
+        }
+
+        return isError;
+    }
+    
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const err = validate();
+        if (!err) {
+            setUsers({
+                userName: "",
+                userNameError: "",
+                password: "",
+                passwordError: "",
+                checkedA: false
+            });
+            handleChange({
+                userName: "",
+                password: "",
+                checkedA: false
+            })
+        }
+    }
+
+    const handleChange = input =>  e => {
+        setUsers({...users, [input]: e.target.value});
+        
+    }
+
+
+    const handleChecked =  e => {
+        setUsers({...users,checkedA: e.target.checked})
+        console.log(e);
     }
 
         const {step} = users;
-        const {userName, password, checkedA} = users;
-        const value = {userName, password, checkedA  }
-        console.log(values)
+        // const {userName, password, checkedA} = users;
+        // const values = {userName, password, checkedA }
+        console.log("this is final state", users);
         switch(step) {
             case 1:
                 return(
                     <FormUserDetails 
                         nextStep={nextStep}
                         handleChange={handleChange}
-                        values={value}
+                        handleChecked={handleChecked}
+                        values={users}
                     />
                 )
             case 2:
@@ -56,59 +108,23 @@ const UserForm = ({values, errors, touched, status}) =>  {
                     <Confirm
                         nextStep={nextStep}
                         prevStep={prevStep}
-                        values={value}
+                        onSubmit={onSubmit}
+                        values={users}
                     />
                     
                 )
             case 3: 
                 return (
-                    <UserList/>
+                    <Redirect to="/dashboard"/>
                 )
         }
         return (
             <div>
-                <Form>
-                    <Field type="text" name="userName" placeholder="User Name"/>
-                    {touched.userName && errors.userName && (
-                        <p>{errors.userName}</p>
-                    )}
-                    <Field type="password" name="password" placeholder=" Password"/>
-                    {touched.password && errors.password && (
-                        <p>(errors.password}</p>
-                    )}
-                    <Field type="checkbox" name="isServiceWorker" checked={values.isServiceWorker}/>
-                </Form>
-                {users.map(user => (
-                    <ul key={user.id}>
-                        <li>User Name: {user.userName}</li>
-                        <li>Password: {user.password}</li>
-                    </ul>
-                ))}
+               
             </div>
         )
+       
     }
 
-    const FormikUserForm = withFormik({
-        mapPropsToValues({userName, password, isServiceWorker}) {
-            return {
-                userName: userName || "",
-                password: password || "",
-                isServiceWorker: isServiceWorker || false
-            };
-        },
-        validationSchema: Yup.object().shape({
-            userName: Yup.string().required(),
-            password: Yup.string().required()
-        }),
-        // handleSubmit(values, {setStatus}) {
-        //     axios 
-        //     .post("https://tipseasebackend.herokuapp.com/api/auth/register", values)
-        //     .then(res => {
-        //         setStatus(res.data);
-        //         console.log(res);
-        //     })
-        //     .catch(err => console.log(err.response));
-        // }
-    })(UserForm);
 
-export default FormikUserForm;
+export default UserForm;
