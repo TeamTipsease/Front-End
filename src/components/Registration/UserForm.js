@@ -36,34 +36,41 @@ const UserForm = (props) =>  {
         })
     }
 
-    // const validate = () => {
-    //     let isError = false;
-    //     const errors = {
-    //         userNameError: "",
-    //         passwordError: ""
-    //     };
+    const validate = () => {
+        let isError = false;
+        const errors = {
+            userNameError: "",
+            passwordError: ""
+        };
 
-    //     if (users.userName.length < 5) {
-    //         isError = true;
-    //         errors.userNameError = "Username need to be at least 5 characters long"
-    //     }
+        if (users.userName.length < 5) {
+            isError = true;
+            errors.userNameError = "Username need to be at least 5 characters long"
+        }
 
-    //     if (isError) {
-    //         setUsers({
-    //             ...users,
-    //             ...errors
-    //         });
-    //     }
+        if (isError) {
+            setUsers({
+                ...users,
+                ...errors
+            });
+        }
 
-    //     return isError;
-    // }
+        return isError;
+    }
     
 
-    const onSubmit = e => {
-        // e.preventDefault();
-        const err = users.validate();
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const err = validate();
         if (!err) {
             setUsers({
+                userName: "",
+                userNameError: "",
+                password: "",
+                passwordError: "",
+                checkedA: false
+            });
+            handleChange({
                 userName: "",
                 password: "",
                 checkedA: false
@@ -71,8 +78,8 @@ const UserForm = (props) =>  {
         }
     }
 
-    const handleChange =  e => {
-        setUsers({...users, userName: e.target.value});
+    const handleChange = input =>  e => {
+        setUsers({...users, [input]: e.target.value});
         
     }
 
@@ -83,10 +90,9 @@ const UserForm = (props) =>  {
     }
 
         const {step} = users;
-        const {userName, password, checkedA} = users;
-        const values = {userName, password, checkedA  }
-        console.log(users)
-        console.log(values)
+        // const {userName, password, checkedA} = users;
+        // const values = {userName, password, checkedA }
+        console.log("this is final state", users);
         switch(step) {
             case 1:
                 return(
@@ -94,7 +100,7 @@ const UserForm = (props) =>  {
                         nextStep={nextStep}
                         handleChange={handleChange}
                         handleChecked={handleChecked}
-                        values={values}
+                        values={users}
                     />
                 )
             case 2:
@@ -103,7 +109,7 @@ const UserForm = (props) =>  {
                         nextStep={nextStep}
                         prevStep={prevStep}
                         onSubmit={onSubmit}
-                        values={values}
+                        values={users}
                     />
                     
                 )
@@ -117,6 +123,7 @@ const UserForm = (props) =>  {
                
             </div>
         )
+       
     }
 
 

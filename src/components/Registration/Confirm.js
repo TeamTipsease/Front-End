@@ -18,7 +18,7 @@ const Confirm = (props) =>  {
     const next = e => {
         e.preventDefault();
         props.nextStep();
-        props.onSubmit();
+        props.onSubmit(e);
     }
 
     const back = e => {
