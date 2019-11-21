@@ -4,12 +4,12 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Checkbox from '@material-ui/core/Checkbox'
-import Typography from '@material-ui/core/Typography';
 import { FormLabel } from "@material-ui/core";
 
 
 
 const FormUserDetails = (props) =>  {
+    // console.log(props);
     const next = e => {
         e.preventDefault();
         props.nextStep();
@@ -18,6 +18,7 @@ const FormUserDetails = (props) =>  {
         const {values, handleChange} = props;
         return (
             <Container>
+                <form onSubmit={() => {}}>
                         <TextField 
                             onChange={handleChange("userName")}
                             defaultValue={values.userName}
@@ -53,7 +54,6 @@ const FormUserDetails = (props) =>  {
                         inputProps={{"aria-label": "uncontrolled-checkbox"}}/>
                         <FormLabel>Are You A Service Worker?</FormLabel>
                         <Button
-                            type="submit"
                             margin="normal"
                             fullWidth
                             variant="contained"
@@ -62,6 +62,7 @@ const FormUserDetails = (props) =>  {
                             style={styles.button}
                             onClick={next}
                         >Continue</Button>
+                        </form>
             </Container>
         )
     }

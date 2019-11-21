@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Axios from "axios";
+import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -16,7 +16,13 @@ const Confirm = (props) =>  {
     console.log(props);
     const classes = useStyles();
     const next = e => {
-        
+            // axios 
+            // .post("https://tipseasebackend.herokuapp.com/api/auth/register")
+            // .then(res => {
+            //     setStatus(res.data);
+            //     console.log(res);
+            // })
+            // .catch(err => console.log(err.response));
         e.preventDefault();
         props.nextStep();
     }
@@ -64,7 +70,6 @@ const Confirm = (props) =>  {
 
         )
 }
-
 
 const styles = {
     button: {
