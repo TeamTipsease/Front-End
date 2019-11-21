@@ -1,130 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import FormUserDetails from './FormUserDetails';
-import Confirm  from './Confirm';
-import {Redirect} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import FormUserDetails from "./FormUserDetails";
+import Confirm from "./Confirm";
+import { Redirect } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { register } from "../../store/actions/userActions";
 
+const UserForm = props => {
+  const loggedIn = useSelector(state => state.userReducer.loggedIn);
+  const dispatch = useDispatch();
+  const [users, setUsers] = useState({
+    step: 1,
+    userName: "",
+    userNameError: "",
+    password: "",
+    passwordError: "",
+    checkedA: false
+  });
 
+  // useEffect(() => {
+  //     status && setUsers(user => [...user, status]);
+  // }, [status]);
 
+  if (loggedIn) return <Redirect to="/dashboard" />;
 
-const UserForm = (props) =>  {
-    const [users, setUsers] = useState({step: 1,
+  const nextStep = () => {
+    const { step } = users;
+    setUsers({ ...users, step: step + 1 });
+  };
+
+  const prevStep = () => {
+    const { step } = users;
+    setUsers({ ...users, step: step - 1 });
+  };
+
+  const validate = () => {
+    let isError = false;
+    const errors = {
+      userNameError: "",
+      passwordError: ""
+    };
+
+    if (users.userName.length < 5) {
+      isError = true;
+      errors.userNameError = "Username need to be at least 5 characters long";
+    }
+
+    if (isError) {
+      setUsers({
+        ...users,
+        ...errors
+      });
+    }
+
+    return isError;
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log("register form data:", users);
+    const credentials = {
+      username: users.userName,
+      password: users.password,
+      isServiceWorker: users.checkedA
+    };
+
+    const err = validate();
+
+    if (!err) {
+      dispatch(register(credentials));
+
+      setUsers({
         userName: "",
         userNameError: "",
         password: "",
         passwordError: "",
-        checkedA: false,
-        })
-        console.log(props);
-        
-        // useEffect(() => {
-        //     status && setUsers(user => [...user, status]);
-        // }, [status]);
-
-    const nextStep = () => {
-        const {step} = users;
-        setUsers({...users,
-            step: step + 1
-        })
-        console.log(step);
+        checkedA: false
+      });
+      handleChange({
+        userName: "",
+        password: "",
+        checkedA: false
+      });
     }
+  };
 
-    const prevStep = () => {
-        const {step} = users;
-        setUsers({...users,
-            step: step - 1
-        })
-    }
+  const handleChange = input => e => {
+    setUsers({ ...users, [input]: e.target.value });
+  };
 
-    const validate = () => {
-        let isError = false;
-        const errors = {
-            userNameError: "",
-            passwordError: ""
-        };
+  const handleChecked = e => {
+    setUsers({ ...users, checkedA: e.target.checked });
+  };
 
-        if (users.userName.length < 5) {
-            isError = true;
-            errors.userNameError = "Username need to be at least 5 characters long"
-        }
-
-        if (isError) {
-            setUsers({
-                ...users,
-                ...errors
-            });
-        }
-
-        return isError;
-    }
-    
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const err = validate();
-        if (!err) {
-            setUsers({
-                userName: "",
-                userNameError: "",
-                password: "",
-                passwordError: "",
-                checkedA: false
-            });
-            handleChange({
-                userName: "",
-                password: "",
-                checkedA: false
-            })
-        }
-    }
-
-    const handleChange = input =>  e => {
-        setUsers({...users, [input]: e.target.value});
-        
-    }
-
-
-    const handleChecked =  e => {
-        setUsers({...users,checkedA: e.target.checked})
-        console.log(e);
-    }
-
-        const {step} = users;
-        // const {userName, password, checkedA} = users;
-        // const values = {userName, password, checkedA }
-        console.log("this is final state", users);
-        switch(step) {
-            case 1:
-                return(
-                    <FormUserDetails 
-                        nextStep={nextStep}
-                        handleChange={handleChange}
-                        handleChecked={handleChecked}
-                        values={users}
-                    />
-                )
-            case 2:
-                return(
-                    <Confirm
-                        nextStep={nextStep}
-                        prevStep={prevStep}
-                        onSubmit={onSubmit}
-                        values={users}
-                    />
-                    
-                )
-            case 3: 
-                return (
-                    <Redirect to="/dashboard"/>
-                )
-        }
-        return (
-            <div>
-               
-            </div>
-        )
-       
-    }
-
+  const { step } = users;
+  // const {userName, password, checkedA} = users;
+  // const values = {userName, password, checkedA }
+  switch (step) {
+    case 1:
+      return (
+        <FormUserDetails
+          nextStep={nextStep}
+          handleChange={handleChange}
+          handleChecked={handleChecked}
+          values={users}
+        />
+      );
+    case 2:
+      return (
+        <Confirm
+          nextStep={nextStep}
+          prevStep={prevStep}
+          onSubmit={onSubmit}
+          values={users}
+        />
+      );
+    case 3:
+      return <Redirect to="/dashboard" />;
+  }
+  return <div></div>;
+};
 
 export default UserForm;
