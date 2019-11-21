@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     dispatch(updateApp());
     // dispatch(
-    //   register({ username: "marks", password: "test", isServiceWorker: 1 })
+    //   register({ username: "new", password: "test", isServiceWorker: 1 })
     // );
   }, [dispatch]);
 

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { useSelector } from "react-redux";
 import { Divider } from "@material-ui/core";
+import { axiosWithAuth } from "../../utils/axiosAuth";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,18 +62,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = () => {
-  const { info, month_at_job, name, tagline, tip, user_id } = useSelector(
-    state => state.userReducer.user
-  );
+  const { id } = useSelector(state => state.userReducer.user);
+  const [user, setUser] = useState({
+    name: "",
+    info: "",
+    month_at_job: 0,
+    tagline: "",
+    tip: ""
+  });
+  useEffect(() => {
+    axiosWithAuth()
+      .get(`/api/worker/${id}`)
+      .then(res => {
+        console.log(res);
+        setUser(res.data);
+      })
+      .catch(err => console.log("use: ", err));
+  }, [id]);
+
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
       <Typography className={classes.name} variant="h5" component="h3">
-        {name}
+        {user.name}
       </Typography>
       <Divider className={classes.divider} />
       <Typography className={classes.tips} variant="h5" component="h3">
-        <span className={classes.tipsTitle}>Tips:</span> ${tip}
+        <span className={classes.tipsTitle}>Tips:</span> ${user.tip}
       </Typography>
       <Divider className={classes.divider} />
       <div className={classes.sectionRow}>
@@ -85,7 +101,7 @@ const Profile = () => {
             color="textSecondary"
             component="p"
           >
-            {info}
+            {user.info}
           </Typography>
         </div>
 
@@ -98,7 +114,7 @@ const Profile = () => {
             color="textSecondary"
             component="p"
           >
-            {month_at_job}
+            {user.month_at_job}
           </Typography>
         </div>
       </div>
@@ -113,7 +129,7 @@ const Profile = () => {
             color="textSecondary"
             component="p"
           >
-            {tagline}
+            {user.tagline}
           </Typography>
         </div>
 
@@ -126,7 +142,7 @@ const Profile = () => {
             color="textSecondary"
             component="p"
           >
-            {user_id}
+            {user.id}
           </Typography>
         </div>
       </div>

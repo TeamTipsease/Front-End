@@ -19,7 +19,10 @@ import {
   DELETE_USER_FAIL,
   DELETE_USER_START,
   DELETE_USER_SUCCESS,
-  SET_UPDATED_USER_FLAG
+  SET_UPDATED_USER_FLAG,
+  TIP_FAIL,
+  TIP_START,
+  TIP_SUCCESS
 } from "../actions/userActions";
 
 const initialState = {
@@ -57,6 +60,9 @@ const initialState = {
     }
   ],
 
+  isTipping: false,
+  tipMessage: "",
+
   isDeleting: false,
   deleteError: "",
 
@@ -67,6 +73,13 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case TIP_START:
+      return { ...state, isTipping: true, tipMessage: "" };
+    case TIP_FAIL:
+      return { ...state, isTipping: false, tipMessage: "Failed to tip worker" };
+
+    case TIP_SUCCESS:
+      return { ...state, isTipping: false, tipMessage: "Tipped!" };
     case FETCH_USER_START:
       return { ...state, isFetchingUser: true, fetchUserError: "" };
     case FETCH_USER_FAIL:
@@ -80,9 +93,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isFetchingUser: false,
         user: {
-          ...state.user,
-          isServiceWorker: action.payload.isServiceWorker,
-          name: action.payload.username
+          ...action.payload
         }
       };
 
@@ -135,7 +146,17 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       localStorage.setItem("authToken", action.payload.token);
       localStorage.setItem("userID", action.payload.user.id);
-      return { ...state, isLoggingIn: false, loggedIn: true, user: {} }; //TODO: Set user data from payload.
+      return {
+        ...state,
+        isLoggingIn: false,
+        loggedIn: true,
+        user: {
+          ...state.user,
+          id: action.payload.user.id,
+          isServiceWorker: action.payload.user.isServiceWorker,
+          name: action.payload.user.username
+        }
+      }; //TODO: Set user data from payload.
     case FETCH_WORKERS_START:
       return { ...state, fetchingWorkers: true };
     case FETCH_WORKERS_SUCCESS:
