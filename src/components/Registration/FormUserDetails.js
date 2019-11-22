@@ -20,6 +20,7 @@ const FormUserDetails = (props) =>  {
             <Container>
                 
                         <TextField 
+                            helperText={values.userNameError}
                             onChange={handleChange("userName")}
                             defaultValue={values.userName}
                             variant="outlined"

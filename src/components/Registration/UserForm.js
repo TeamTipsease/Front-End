@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FormUserDetails from "./FormUserDetails";
 import Confirm from "./Confirm";
 import { Redirect } from "react-router-dom";
@@ -13,14 +13,11 @@ const UserForm = props => {
     step: 1,
     userName: "",
     userNameError: "",
-    password: "",
-    passwordError: "",
+    password: "",            
     checkedA: false
   });
 
-  // useEffect(() => {
-  //     status && setUsers(user => [...user, status]);
-  // }, [status]);
+
 
   if (loggedIn) return <Redirect to="/dashboard" />;
 
@@ -37,8 +34,7 @@ const UserForm = props => {
   const validate = () => {
     let isError = false;
     const errors = {
-      userNameError: "",
-      passwordError: ""
+      userNameError: ""
     };
 
     if (users.userName.length < 5) {
@@ -74,7 +70,6 @@ const UserForm = props => {
         userName: "",
         userNameError: "",
         password: "",
-        passwordError: "",
         checkedA: false
       });
       handleChange({
@@ -94,8 +89,6 @@ const UserForm = props => {
   };
 
   const { step } = users;
-  // const {userName, password, checkedA} = users;
-  // const values = {userName, password, checkedA }
   switch (step) {
     case 1:
       return (
@@ -107,13 +100,14 @@ const UserForm = props => {
         />
       );
     case 2:
+        
       return (
         <Confirm
           nextStep={nextStep}
           prevStep={prevStep}
           onSubmit={onSubmit}
           values={users}
-        />
+        />   
       );
     case 3:
       return <Redirect to="/dashboard" />;
