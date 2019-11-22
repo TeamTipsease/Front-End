@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import axios from "axios";
 
 
 const useStyles = makeStyles({
@@ -18,7 +17,7 @@ const Confirm = (props) =>  {
     const next = e => {
         e.preventDefault();
         props.nextStep();
-        props.onSubmit(e);
+        
     }
 
     const back = e => {
@@ -39,8 +38,7 @@ const Confirm = (props) =>  {
                 </Typography>
                 <br/>
             <Button
-                type="submit"
-                onSubmit={props.onSubmit}
+                
                 margin="normal"
                 fullWidth
                 variant="contained"

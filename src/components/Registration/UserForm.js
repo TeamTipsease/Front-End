@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FormUserDetails from "./FormUserDetails";
 import Confirm from "./Confirm";
 import { Redirect } from "react-router-dom";
-
+import axios from 'axios'
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../store/actions/userActions";
 
@@ -13,14 +13,19 @@ const UserForm = props => {
     step: 1,
     userName: "",
     userNameError: "",
-    password: "",
-    passwordError: "",
+    password: "",            
     checkedA: false
   });
 
-  // useEffect(() => {
-  //     status && setUsers(user => [...user, status]);
-  // }, [status]);
+  useEffect(() => {
+      axios
+      .get("https://tipseasebackend.herokuapp.com/api/auth/register")
+      .then(res => {
+          console.log(res.data)
+          setUsers(res.data)
+      })
+  })
+
 
   if (loggedIn) return <Redirect to="/dashboard" />;
 
@@ -37,8 +42,7 @@ const UserForm = props => {
   const validate = () => {
     let isError = false;
     const errors = {
-      userNameError: "",
-      passwordError: ""
+      userNameError: ""
     };
 
     if (users.userName.length < 5) {
@@ -74,7 +78,6 @@ const UserForm = props => {
         userName: "",
         userNameError: "",
         password: "",
-        passwordError: "",
         checkedA: false
       });
       handleChange({
@@ -82,7 +85,7 @@ const UserForm = props => {
         password: "",
         checkedA: false
       });
-    }
+    } 
   };
 
   const handleChange = input => e => {
@@ -94,8 +97,6 @@ const UserForm = props => {
   };
 
   const { step } = users;
-  // const {userName, password, checkedA} = users;
-  // const values = {userName, password, checkedA }
   switch (step) {
     case 1:
       return (
@@ -103,17 +104,18 @@ const UserForm = props => {
           nextStep={nextStep}
           handleChange={handleChange}
           handleChecked={handleChecked}
+          onSubmit={onSubmit}
           values={users}
         />
       );
     case 2:
+        
       return (
         <Confirm
           nextStep={nextStep}
           prevStep={prevStep}
-          onSubmit={onSubmit}
           values={users}
-        />
+        />   
       );
     case 3:
       return <Redirect to="/dashboard" />;
