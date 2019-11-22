@@ -13,6 +13,7 @@ const FormUserDetails = (props) =>  {
     const next = e => {
         e.preventDefault();
         props.nextStep();
+        props.onSubmit(e);
     }
 
         const {values, handleChange, handleChecked} = props;
@@ -56,6 +57,8 @@ const FormUserDetails = (props) =>  {
                         inputProps={{"aria-label": "uncontrolled-checkbox"}}/>
                         <FormLabel>Are You A Service Worker?</FormLabel>
                         <Button
+                            type="submit"
+                            onSubmit={props.onSubmit}
                             margin="normal"
                             fullWidth
                             variant="contained"

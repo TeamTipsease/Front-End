@@ -77,7 +77,7 @@ const UserForm = props => {
         password: "",
         checkedA: false
       });
-    }
+    } 
   };
 
   const handleChange = input => e => {
@@ -96,6 +96,7 @@ const UserForm = props => {
           nextStep={nextStep}
           handleChange={handleChange}
           handleChecked={handleChecked}
+          onSubmit={onSubmit}
           values={users}
         />
       );
@@ -105,7 +106,6 @@ const UserForm = props => {
         <Confirm
           nextStep={nextStep}
           prevStep={prevStep}
-          onSubmit={onSubmit}
           values={users}
         />   
       );
