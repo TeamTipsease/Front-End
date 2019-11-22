@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormUserDetails from "./FormUserDetails";
 import Confirm from "./Confirm";
 import { Redirect } from "react-router-dom";
-
+import axios from 'axios'
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../store/actions/userActions";
 
@@ -17,6 +17,14 @@ const UserForm = props => {
     checkedA: false
   });
 
+  useEffect(() => {
+      axios
+      .get("https://tipseasebackend.herokuapp.com/api/auth/register")
+      .then(res => {
+          console.log(res.data)
+          setUsers(res.data)
+      })
+  })
 
 
   if (loggedIn) return <Redirect to="/dashboard" />;
